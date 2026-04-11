@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Service Mechanic List</title>
@@ -55,7 +55,7 @@
                             <td class="text-center">${l.mechanicID}</td>
                             <td class="text-center">${l.hours}</td>
                             <td>${l.comment}</td>
-                            <td class="text-end">${l.rate} vnđ</td>
+                            <td class="text-end">${l.rate} vnÄ‘</td>
                             <td class="text-center">
                                 <a href="UpdateServiceMechanicController?serviceTicketID=${l.serviceTicketID}&serviceID=${l.serviceID}" 
                                    class="btn btn-primary btn-sm btn-action">

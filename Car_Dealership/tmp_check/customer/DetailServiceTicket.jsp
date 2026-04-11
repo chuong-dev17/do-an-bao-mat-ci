@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -46,11 +46,11 @@
         <table class="table table-hover table-bordered">
             <thead>
                 <tr class="text-center">
-                    <th>Mã dịch vụ</th>
-                    <th>Mã thợ sửa chữa</th>
-                    <th>Giờ làm</th>
-                    <th>Đánh giá</th>
-                    <th>Giá tiền</th>
+                    <th>MÃ£ dá»‹ch vá»¥</th>
+                    <th>MÃ£ thá»£ sá»­a chá»¯a</th>
+                    <th>Giá» lÃ m</th>
+                    <th>ÄÃ¡nh giÃ¡</th>
+                    <th>GiÃ¡ tiá»n</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,7 +60,7 @@
                         <td class="text-center">${l.mechanicID}</td>
                         <td class="text-center">${l.hours}</td>
                         <td>${l.comment}</td>
-                        <td class="text-end">${l.rate} vnđ</td>
+                        <td class="text-end">${l.rate} vnÄ‘</td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -69,9 +69,9 @@
         <table class="table table-hover table-bordered">
             <thead>
                 <tr class="text-center">
-                    <th>Mã linh kiện</th>
-                    <th>Số lượng</th>
-                    <th>Giá tiền</th>
+                    <th>MÃ£ linh kiá»‡n</th>
+                    <th>Sá»‘ lÆ°á»£ng</th>
+                    <th>GiÃ¡ tiá»n</th>
                 </tr>
             </thead>
             <tbody>

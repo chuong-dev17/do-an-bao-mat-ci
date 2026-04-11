@@ -1,4 +1,4 @@
-<%-- 
+﻿<%-- 
     Document   : AddP
     Created on : Feb 28, 2025, 12:37:27 AM
     Author     : G14
@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -14,6 +14,12 @@
     <body>
         <form action="${pageContext.request.contextPath}/AddParts">
             <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td>PartID</td>
@@ -41,3 +47,4 @@
         </form>
     </body>
 </html>
+

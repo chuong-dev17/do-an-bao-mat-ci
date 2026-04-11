@@ -1,4 +1,4 @@
-<%--
+﻿<%--
     Document   : UpdatePart
     Created on : Feb 19, 2025, 2:02:47 AM
     Author     : G14
@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Update Part</title>
@@ -63,6 +63,12 @@
     <body>
         <form method="post" accept-charset="UTF-8">
             <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td>Part ID</td>

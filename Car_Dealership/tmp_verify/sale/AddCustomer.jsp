@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,14 +61,14 @@
                 <div class="sidebar">
                     <h4>Logo</h4>
                     <div class="user-info">
-                        🔵 Chào mừng, ${sessionScope.USER.salesName}!
+                        ðŸ”µ ChÃ o má»«ng, ${sessionScope.USER.salesName}!
                     </div>
-                    <a href="${pageContext.request.contextPath}/CustomerServlet">👤 CUSTOMER</a>
-                    <a href="${pageContext.request.contextPath}/CarsController">🚗 CAR</a>
-                    <a href="${pageContext.request.contextPath}/ViewSTforSale">📄 SERVICE TICKET</a>
-                    <a href="${pageContext.request.contextPath}/ListParts">🛠️ Parts</a>
-                    <a href="${pageContext.request.contextPath}/sale/CreateInvoice.jsp">📝 Create Invoice</a>
-                    <a href="${pageContext.request.contextPath}/LogoutController">🚪 Logout</a>
+                    <a href="${pageContext.request.contextPath}/CustomerServlet">ðŸ‘¤ CUSTOMER</a>
+                    <a href="${pageContext.request.contextPath}/CarsController">ðŸš— CAR</a>
+                    <a href="${pageContext.request.contextPath}/ViewSTforSale">ðŸ“„ SERVICE TICKET</a>
+                    <a href="${pageContext.request.contextPath}/ListParts">ðŸ› ï¸ Parts</a>
+                    <a href="${pageContext.request.contextPath}/sale/CreateInvoice.jsp">ðŸ“ Create Invoice</a>
+                    <a href="${pageContext.request.contextPath}/LogoutController">ðŸšª Logout</a>
                 </div>
                 <div class="main-content">
                     <h2>ADD CUSTOMER</h2>

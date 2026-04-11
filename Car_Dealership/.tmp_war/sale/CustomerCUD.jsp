@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -15,7 +15,7 @@
         <script type="text/javascript">
             var contextPath = "${pageContext.request.contextPath}";
             function doDelete(custID) {
-                if (custID && confirm("Bạn có chắc chắn muốn xóa dịch vụ với ID: " + custID + " không?")) {
+                if (custID && confirm("Báº¡n cÃ³ cháº¯c cháº¯n muá»‘n xÃ³a dá»‹ch vá»¥ vá»›i ID: " + custID + " khÃ´ng?")) {
                     window.location.href = contextPath + "/DeleteCustomerController?custID=" + (custID);
                 }
             }
@@ -38,8 +38,8 @@
                 <h3><a href="sale/AddCustomer.jsp">Add Customer</a></h3>
 
                 <form action="${pageContext.request.contextPath}/CustomerServlet" accept-charset="UTF-8">
-                    <input type="text" name="custName" placeholder="Tên khách hàng" value="${param.custName}">
-                    <input type="submit" value="Tìm kiếm">
+                    <input type="text" name="custName" placeholder="TÃªn khÃ¡ch hÃ ng" value="${param.custName}">
+                    <input type="submit" value="TÃ¬m kiáº¿m">
                 </form>
 
                 <table border="1px">

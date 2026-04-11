@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Service</title>
@@ -33,12 +33,12 @@
                     <button type="submit" class="btn btn-primary">Add Service</button>
                     <a href="${pageContext.request.contextPath}/ListServiceController" style="margin-left: 20px">Back</a>
                 </form>
-                <!-- Hiển thị lỗi nếu có -->
+                <!-- Hiá»ƒn thá»‹ lá»—i náº¿u cÃ³ -->
                 <h3 class="text-danger mt-3">${error}</h3>
             </div>
         </div>
 
-        <!-- Bootstrap JavaScript (nếu cần dùng các tính năng JS của Bootstrap như modal, dropdown, v.v.) -->
+        <!-- Bootstrap JavaScript (náº¿u cáº§n dÃ¹ng cÃ¡c tÃ­nh nÄƒng JS cá»§a Bootstrap nhÆ° modal, dropdown, v.v.) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

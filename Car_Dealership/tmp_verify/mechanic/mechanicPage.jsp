@@ -81,7 +81,7 @@
                 <a class="navbar-brand d-flex align-items-center" href="#">
                     <img src="./img/machanic_icon.png" alt="Logo">
                 </a>
-                <span class="welcome-text"><i class="bi bi-person-circle"></i> Chào mừng, ${USER.mechanicName}!</span>
+                <span class="welcome-text"><i class="bi bi-person-circle"></i> ChÃ o má»«ng, ${USER.mechanicName}!</span>
             </div>
         </nav>
 
@@ -108,7 +108,7 @@
 
             <!-- Content -->
             <div class="content">
-                <iframe id="contentFrame" src=""></iframe>
+                <iframe id="contentFrame" src="" title="Noi dung chinh"></iframe>
             </div>
         </div>
 

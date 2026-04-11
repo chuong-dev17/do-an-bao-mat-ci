@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -16,7 +16,7 @@
         <script type="text/javascript">
             var contextPath = "${pageContext.request.contextPath}";
             function doDelete(carID) {
-                if (carID && confirm("Bạn có chắc chắn muốn xóa dịch vụ với ID: " + carID + " không?")) {
+                if (carID && confirm("Báº¡n cÃ³ cháº¯c cháº¯n muá»‘n xÃ³a dá»‹ch vá»¥ vá»›i ID: " + carID + " khÃ´ng?")) {
                     window.location.href = contextPath + "/DeleteCarController?carID=" + (carID);
                 }
             }
