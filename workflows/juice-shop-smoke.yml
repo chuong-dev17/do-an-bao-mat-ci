@@ -1,0 +1,46 @@
+# Car_Dealership smoke test bằng Docker image build từ mã nguồn trong repo.
+name: Car_Dealership smoke (docker)
+
+on:
+  push:
+    branches: [main, master, develop]
+  workflow_dispatch:
+
+jobs:
+  car-dealership-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Car_Dealership image
+        run: docker build -t car-dealership:ci ./Car_Dealership
+
+      - name: Run Car_Dealership container
+        run: docker run -d --name car-dealership -p 8080:8080 car-dealership:ci
+
+      - name: Wait for Car_Dealership
+        run: |
+          for i in $(seq 1 60); do
+            if curl -sf --max-time 5 http://localhost:8080/ >/dev/null; then
+              echo "Car_Dealership responded on localhost:8080"
+              exit 0
+            fi
+            echo "attempt $i: waiting..."
+            sleep 2
+          done
+          echo "timeout waiting for Car_Dealership"
+          exit 1
+
+      - name: Smoke test homepage
+        run: |
+          curl -sf --max-time 10 "http://localhost:8080/" | head -c 500
+          echo
+
+      - name: Show container logs when failed
+        if: failure()
+        run: docker logs car-dealership
+
+      - name: Cleanup container
+        if: always()
+        run: docker rm -f car-dealership

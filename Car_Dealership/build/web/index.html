@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chọn Vai Trò Đăng Nhập</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .role-card {
+            transition: 0.3s;
+            cursor: pointer;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            border: 2px solid transparent;
+        }
+        .role-card:hover {
+            transform: scale(1.1);
+            border-color: #007bff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .role-card img {
+            width: 80px; /* Điều chỉnh kích thước icon */
+            height: 80px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-lg" style="max-width: 800px; width: 100%;">
+        <h2 class="text-center mb-4">Chọn Vai Trò Đăng Nhập</h2>
+        
+        <form action="MainLoginController" method="post">
+            <div class="row g-3 text-center">
+                
+                <!-- Nhân viên bán hàng -->
+                <div class="col-md-4">
+                    <button type="submit" name="role" value="SalesPerson" class="btn w-100 role-card">
+                        <img src="./img/saler_icon.png" alt="Nhân viên bán hàng">
+                        <h5 class="mt-2">Nhân viên bán hàng</h5>
+                    </button>
+                </div>
+
+                <!-- Thợ sửa chữa -->
+                <div class="col-md-4">
+                    <button type="submit" name="role" value="Mechanic" class="btn w-100 role-card">
+                        <img src="./img/machanic_icon.png" alt="Thợ sửa chữa">
+                        <h5 class="mt-2">Thợ sửa chữa</h5>
+                    </button>
+                </div>
+
+                <!-- Khách hàng -->
+                <div class="col-md-4">
+                    <button type="submit" name="role" value="Customer" class="btn w-100 role-card">
+                        <img src="./img/customer_icon.png" alt="Khách hàng">
+                        <h5 class="mt-2">Khách hàng</h5>
+                    </button>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

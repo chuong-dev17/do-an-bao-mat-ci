@@ -1,0 +1,42 @@
+# SAST: Semgrep trên mã nguồn repo. Upload SARIF (Code Scanning trên repo public).
+name: Security CI (Semgrep)
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  semgrep:
+    name: Semgrep scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Semgrep
+        run: pip install --no-cache-dir semgrep
+
+      - name: Run Semgrep (SARIF + log)
+        # Không fail job khi có finding; log vẫn hiển thị số cảnh báo. SARIF upload lên Code Scanning (repo public).
+        run: |
+          set +e
+          semgrep scan --config auto --sarif --output=semgrep.sarif .
+          true
+
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v4
+        if: hashFiles('semgrep.sarif') != ''
+        with:
+          sarif_file: semgrep.sarif
+          category: semgrep

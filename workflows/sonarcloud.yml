@@ -1,0 +1,46 @@
+# Phân tích SonarQube Cloud. Thêm GitHub secret SONAR_TOKEN (và sửa sonar-project.properties).
+name: SonarCloud
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonarqube:
+    name: SonarCloud Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate SonarCloud configuration
+        id: sonar_cfg
+        shell: bash
+        run: |
+          configured=true
+
+          if [ -z "${{ secrets.SONAR_TOKEN }}" ]; then
+            echo "::warning::Missing SONAR_TOKEN secret. Skipping SonarCloud scan."
+            configured=false
+          fi
+
+          if grep -q "YOUR_SONARCLOUD_" sonar-project.properties; then
+            echo "::warning::sonar-project.properties still contains placeholder values. Skipping SonarCloud scan."
+            configured=false
+          fi
+
+          echo "configured=$configured" >> "$GITHUB_OUTPUT"
+
+      - name: SonarQube Scan
+        if: steps.sonar_cfg.outputs.configured == 'true'
+        uses: SonarSource/sonarqube-scan-action@v7.1.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: SonarCloud skipped
+        if: steps.sonar_cfg.outputs.configured != 'true'
+        run: echo "SonarCloud scan skipped because project is not configured yet."
