@@ -27,16 +27,13 @@ jobs:
       - name: Install Semgrep
         run: pip install --no-cache-dir semgrep
 
-      - name: Run Semgrep (SARIF + log)
-        # Không fail job khi có finding; log vẫn hiển thị số cảnh báo. SARIF upload lên Code Scanning (repo public).
-        run: |
-          set +e
-          semgrep scan --config auto --sarif --output=semgrep.sarif .
-          true
+      - name: Run Semgrep (SARIF + strict gate)
+        # Fail job khi có finding để chặn PR/merge không an toàn, nhưng vẫn xuất SARIF.
+        run: semgrep scan --config auto --error --sarif --output=semgrep.sarif .
 
       - name: Upload SARIF to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v4
-        if: hashFiles('semgrep.sarif') != ''
+        if: always() && hashFiles('semgrep.sarif') != ''
         with:
           sarif_file: semgrep.sarif
           category: semgrep

@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevSecOps SAST cho Car_Dealership</title>
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg-2: #111b31;
+            --panel: rgba(14, 24, 44, 0.88);
+            --panel-strong: rgba(20, 32, 58, 0.96);
+            --line: rgba(167, 188, 255, 0.18);
+            --text: #eff4ff;
+            --muted: #b7c2e0;
+            --accent: #7dd3fc;
+            --accent-2: #8bdf9c;
+            --warn: #ffd166;
+            --danger: #ff8a8a;
+            --shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+        }
+
+        * { box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Times New Roman", Georgia, serif;
+            background:
+                radial-gradient(circle at top left, rgba(125, 211, 252, 0.18), transparent 32%),
+                radial-gradient(circle at right center, rgba(139, 223, 156, 0.12), transparent 26%),
+                linear-gradient(135deg, #07101d, #0b1220 48%, #101a30);
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        .deck {
+            height: 100vh;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            scroll-padding-top: 0;
+        }
+
+        .slide {
+            min-height: 100vh;
+            padding: 48px 56px 42px;
+            scroll-snap-align: start;
+            position: relative;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
+
+        .slide::before {
+            content: "";
+            position: absolute;
+            inset: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 30px;
+            pointer-events: none;
+        }
+
+        .kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+            font-size: 16px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .kicker::before {
+            content: "";
+            width: 44px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+
+        h1, h2, h3, p {
+            margin: 0;
+        }
+
+        h1 {
+            font-size: clamp(42px, 6vw, 72px);
+            line-height: 0.96;
+            max-width: 11ch;
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            font-size: clamp(28px, 3vw, 42px);
+            margin-bottom: 18px;
+        }
+
+        h3 {
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            font-size: 22px;
+            line-height: 1.45;
+        }
+
+        .muted { color: var(--muted); }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 34px;
+            align-items: center;
+        }
+
+        .hero-card,
+        .panel {
+            background: linear-gradient(180deg, var(--panel), rgba(8, 15, 28, 0.88));
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+
+        .hero-card {
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::after {
+            content: "";
+            position: absolute;
+            inset: auto -20% -35% auto;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(125, 211, 252, 0.18), transparent 65%);
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .stat {
+            padding: 18px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 28px;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .panel {
+            padding: 24px 26px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            padding: 20px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .card .tag {
+            display: inline-flex;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 15px;
+            margin-bottom: 12px;
+            background: rgba(125, 211, 252, 0.14);
+            color: var(--accent);
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        li + li { margin-top: 10px; }
+
+        .flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .step {
+            flex: 1 1 180px;
+            min-width: 180px;
+            padding: 16px 18px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .step strong {
+            display: block;
+            color: var(--accent-2);
+            margin-bottom: 6px;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .chip {
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 18px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-top: 22px;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .progress {
+            position: fixed;
+            left: 28px;
+            right: 28px;
+            bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .bar {
+            flex: 1;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            overflow: hidden;
+        }
+
+        .bar span {
+            display: block;
+            height: 100%;
+            width: 0;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        }
+
+        .counter {
+            min-width: 86px;
+            text-align: right;
+            font-size: 16px;
+            color: var(--muted);
+        }
+
+        .nav {
+            position: fixed;
+            right: 22px;
+            top: 22px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .nav button {
+            border: 0;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font-family: inherit;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav button:hover {
+            background: rgba(125, 211, 252, 0.16);
+        }
+
+        .accent { color: var(--accent); }
+        .danger { color: var(--danger); }
+        .warn { color: var(--warn); }
+
+        @media (max-width: 980px) {
+            body { overflow: auto; }
+            .slide { padding: 26px 18px 34px; }
+            .hero,
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .stat-grid { grid-template-columns: 1fr; }
+            h1 { max-width: none; }
+            p, li { font-size: 18px; }
+            .footer { flex-direction: column; align-items: flex-start; }
+            .nav { top: auto; bottom: 76px; right: 18px; }
+        }
+
+        @media print {
+            body { overflow: visible; background: white; color: #111; }
+            .deck { height: auto; overflow: visible; scroll-snap-type: none; }
+            .slide {
+                min-height: 100vh;
+                page-break-after: always;
+                background: white;
+                color: #111;
+            }
+            .slide::before,
+            .progress,
+            .nav { display: none; }
+            .hero-card,
+            .panel,
+            .card,
+            .step { box-shadow: none; background: #f7f8fb; border-color: #dbe3f0; }
+            .muted { color: #444; }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav" aria-label="Điều hướng slide">
+        <button type="button" id="prevBtn">← Trước</button>
+        <button type="button" id="nextBtn">Sau →</button>
+    </div>
+
+    <main class="deck" id="deck">
+        <section class="slide" data-title="Bìa">
+            <div class="hero">
+                <div>
+                    <div class="kicker">Đề cương thuyết trình</div>
+                    <h1>DevSecOps SAST cho Car_Dealership</h1>
+                    <p class="muted">Dự án web quản lý gara ô tô bằng Java Servlet/JSP/JSTL, theo kiến trúc MVC, triển khai trên Tomcat và lưu dữ liệu bằng SQL Server.</p>
+                    <div class="stat-grid">
+                        <div class="stat"><strong>MVC</strong><span>Controller - DAO - DTO - JSP</span></div>
+                        <div class="stat"><strong>Tomcat</strong><span>Triển khai ứng dụng web</span></div>
+                        <div class="stat"><strong>SQL Server</strong><span>Lưu trữ dữ liệu nghiệp vụ</span></div>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <h3>Phạm vi dự án</h3>
+                    <p class="muted">Ứng dụng có các vai trò SalesPerson, Mechanic và Customer; các chức năng chính gồm quản lý xe, khách hàng, phụ tùng, phiếu dịch vụ, hóa đơn và báo cáo thống kê.</p>
+                    <div class="chips">
+                        <span class="chip">SalesPerson</span>
+                        <span class="chip">Mechanic</span>
+                        <span class="chip">Customer</span>
+                        <span class="chip">Service Ticket</span>
+                        <span class="chip">Invoice</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Đề tài: Tích hợp kiểm thử bảo mật mã nguồn vào pipeline CI/CD cho Car_Dealership</span>
+                <span class="accent">1</span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="Giới thiệu">
+            <div class="kicker">1. Nội dung</div>
+            <h2>Giới thiệu dự án và bài toán bảo mật</h2>
+            <div class="grid-2">
+                <div class="panel">
+                    <h3>Dự án hiện tại</h3>
+                    <ul>
+                        <li>Car_Dealership là hệ thống quản lý gara ô tô phát triển bằng Java Web.</li>
+                        <li>Mã nguồn thể hiện rõ cấu trúc MVC với controller, DAO, DTO và giao diện JSP.</li>
+                        <li>Ứng dụng có đăng nhập theo vai trò và các phân hệ nghiệp vụ tách biệt.</li>
+                    </ul>
+                </div>
+                <div class="panel">
+                    <h3>Vấn đề bảo mật</h3>
+                    <ul>
+                        <li>Kiểm tra thủ công chậm và dễ bỏ sót khi code thay đổi liên tục.</li>
+                        <li>Dễ phát sinh SQL Injection, XSS hoặc lộ thông tin nhạy cảm trong mã nguồn.</li>
+                        <li>Cần đưa SAST vào pipeline để phát hiện sớm ngay từ pull request hoặc push mới.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer"><span class="muted">Slide này giới thiệu đúng project và lý do cần tự động quét bảo mật.</span><span class="accent">2</span></div>
+        </section>
+
+        <section class="slide" data-title="Input Output">
+            <div class="kicker">2. Bài toán</div>
+            <h2>Input / Output của hệ thống</h2>
+            <div class="grid-2">
+                <div class="panel">
+                    <h3>Input</h3>
+                    <div class="flow">
+                        <div class="step"><strong>Mã nguồn</strong><span class="muted">Servlet, JSP, DAO, DTO, SQL script</span></div>
+                        <div class="step"><strong>CI/CD</strong><span class="muted">Workflow security-ci.yml trên GitHub Actions</span></div>
+                        <div class="step"><strong>SAST</strong><span class="muted">Semgrep ruleset hoặc SonarQube rules</span></div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <h3>Output</h3>
+                    <ul>
+                        <li>Cảnh báo bảo mật theo file và số dòng.</li>
+                        <li>Phân loại mức độ: Low, Medium, High.</li>
+                        <li>Nhóm lỗi ưu tiên: SQL Injection, XSS, Hardcoded Secrets, lỗi xác thực và session.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer"><span class="muted">Đầu vào là mã nguồn và workflow, đầu ra là báo cáo có thể truy vết.</span><span class="accent">3</span></div>
+        </section>
+
+        <section class="slide" data-title="Mục tiêu">
+            <div class="kicker">3. Mục tiêu</div>
+            <h2>Mục tiêu và nội dung nghiên cứu</h2>
+            <div class="grid-2">
+                <div class="panel">
+                    <h3>Mục tiêu</h3>
+                    <ul>
+                        <li>Làm chủ DevSecOps và SAST trên một dự án Java Web thực tế.</li>
+                        <li>Xây dựng pipeline tự động quét mã nguồn Car_Dealership khi có thay đổi.</li>
+                        <li>Đánh giá hiệu quả của quét tự động so với kiểm thử thủ công.</li>
+                    </ul>
+                </div>
+                <div class="panel">
+                    <h3>Nội dung nghiên cứu</h3>
+                    <ul>
+                        <li>Tổng quan DevSecOps, SAST và nguyên tắc shift left.</li>
+                        <li>Phân tích cấu trúc dự án Car_Dealership và các luồng nghiệp vụ chính.</li>
+                        <li>Thiết kế pipeline, môi trường Docker/Tomcat và thực nghiệm quét.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer"><span class="muted">Ba slide đầu giờ tập trung đúng vào dự án, luồng bài toán và mục tiêu nghiên cứu.</span><span class="accent">4</span></div>
+        </section>
+
+        <section class="slide" data-title="Phương pháp">
+            <div class="kicker">4. Phương pháp</div>
+            <h2>Cách thực hiện</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="tag">01</div>
+                    <h3>Nghiên cứu lý thuyết</h3>
+                    <p class="muted">Tổng hợp tài liệu OWASP và kiến thức CI/CD, DevSecOps, gắn với đặc thù Java Web của dự án.</p>
+                </div>
+                <div class="card">
+                    <div class="tag">02</div>
+                    <h3>Xây dựng pipeline</h3>
+                    <p class="muted">Dùng GitHub Actions để tự động chạy Semgrep/SAST khi có push hoặc pull request trên repo.</p>
+                </div>
+                <div class="card">
+                    <div class="tag">03</div>
+                    <h3>Tích hợp SAST</h3>
+                    <p class="muted">Tập trung phát hiện lỗi trong servlet, DAO, JSP và thông tin nhạy cảm trong mã nguồn.</p>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-top: 18px;">
+                <div class="panel">
+                    <h3>Thực nghiệm</h3>
+                    <p class="muted">Chạy trực tiếp trên Car_Dealership và có thể đóng gói bằng Docker để kiểm chứng khả năng phát hiện lỗi.</p>
+                </div>
+                <div class="panel">
+                    <h3>Đánh giá</h3>
+                    <p class="muted">So sánh thời gian, độ chính xác và mức giảm rủi ro giữa kiểm tra thủ công và kiểm tra tự động.</p>
+                </div>
+            </div>
+            <div class="footer"><span class="muted">Phương pháp thiên về triển khai thực nghiệm, có thể đo lường được.</span><span class="accent">5</span></div>
+        </section>
+
+        <section class="slide" data-title="Công cụ">
+            <div class="kicker">5. Công cụ sử dụng</div>
+            <h2>Stack công nghệ</h2>
+            <div class="grid-2">
+                <div class="panel">
+                    <h3>Thành phần</h3>
+                    <div class="chips">
+                        <span class="chip">Java Servlet/JSP/JSTL</span>
+                        <span class="chip">SQL Server</span>
+                        <span class="chip">Apache Tomcat</span>
+                        <span class="chip">GitHub Actions</span>
+                        <span class="chip">Semgrep</span>
+                    </div>
+                </div>
+                <div class="panel">
+                    <h3>Vai trò</h3>
+                    <ul>
+                        <li>Java Web là nền tảng ứng dụng của Car_Dealership.</li>
+                        <li>SQL Server lưu dữ liệu cho xe, khách hàng, dịch vụ, hóa đơn và thống kê.</li>
+                        <li>GitHub Actions và Semgrep điều phối quá trình quét bảo mật tự động.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer"><span class="muted">Công cụ được chọn theo tiêu chí: phổ biến, dễ tự động hóa, dễ đánh giá.</span><span class="accent">6</span></div>
+        </section>
+
+        <section class="slide" data-title="Kết quả">
+            <div class="kicker">6. Kết quả dự kiến</div>
+            <h2>Sản phẩm và kết quả phân tích</h2>
+            <div class="grid-2">
+                <div class="panel">
+                    <h3>Sản phẩm kỹ thuật</h3>
+                    <ul>
+                        <li>Mã nguồn Car_Dealership và cấu hình pipeline trên GitHub.</li>
+                        <li>Quy trình CI/CD tự động quét bảo mật bằng Semgrep/SAST.</li>
+                        <li>Báo cáo lỗ hổng theo file, dòng, mức độ và nhóm lỗi.</li>
+                    </ul>
+                </div>
+                <div class="panel">
+                    <h3>Đánh giá hiệu quả</h3>
+                    <ul>
+                        <li>So sánh trước và sau khi có pipeline trên cùng một codebase.</li>
+                        <li>Đo thời gian phản hồi và số lượng lỗ hổng phát hiện.</li>
+                        <li>Chứng minh lợi ích của cách tiếp cận shift left cho dự án thật.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer"><span class="muted">Kỳ vọng cuối cùng: giảm rủi ro, tăng tính chủ động của nhóm phát triển.</span><span class="accent">7</span></div>
+        </section>
+
+        <section class="slide" data-title="Tài liệu">
+            <div class="kicker">7. Tài liệu tham khảo</div>
+            <h2>Nguồn chính</h2>
+            <div class="panel">
+                <ul>
+                    <li>OWASP Top 10 và SAST Guide.</li>
+                    <li>SonarQube Documentation, Semgrep Docs.</li>
+                    <li>GitHub Actions, Docker Docs và tài liệu DevSecOps từ Microsoft, GitLab, Snyk.</li>
+                    <li>Car_Dealership là mã nguồn thực nghiệm chính của đề tài.</li>
+                </ul>
+            </div>
+            <div class="footer">
+                <span class="muted">Gợi ý trình bày: chốt bằng 1 câu về giá trị của tự động hóa bảo mật.</span>
+                <span class="accent">8</span>
+            </div>
+        </section>
+    </main>
+
+    <div class="progress" aria-hidden="true">
+        <div class="bar"><span id="barFill"></span></div>
+        <div class="counter" id="counter">1 / 8</div>
+    </div>
+
+    <script>
+        const deck = document.getElementById('deck');
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const barFill = document.getElementById('barFill');
+        const counter = document.getElementById('counter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        let activeIndex = 0;
+
+        function updateUI(index) {
+            const total = slides.length;
+            activeIndex = Math.max(0, Math.min(index, total - 1));
+            const percent = ((activeIndex + 1) / total) * 100;
+            barFill.style.width = percent + '%';
+            counter.textContent = `${activeIndex + 1} / ${total}`;
+            document.title = slides[activeIndex].dataset.title + ' - DevSecOps SAST';
+        }
+
+        function scrollToSlide(index) {
+            const slide = slides[Math.max(0, Math.min(index, slides.length - 1))];
+            slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            updateUI(index);
+        }
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = slides.indexOf(entry.target);
+                    if (index !== -1) updateUI(index);
+                }
+            });
+        }, { root: deck, threshold: 0.6 });
+
+        slides.forEach(slide => observer.observe(slide));
+
+        prevBtn.addEventListener('click', () => scrollToSlide(activeIndex - 1));
+        nextBtn.addEventListener('click', () => scrollToSlide(activeIndex + 1));
+
+        document.addEventListener('keydown', event => {
+            if (['ArrowRight', 'PageDown', ' '].includes(event.key)) {
+                event.preventDefault();
+                scrollToSlide(activeIndex + 1);
+            }
+            if (['ArrowLeft', 'PageUp'].includes(event.key)) {
+                event.preventDefault();
+                scrollToSlide(activeIndex - 1);
+            }
+            if (event.key === 'Home') {
+                event.preventDefault();
+                scrollToSlide(0);
+            }
+            if (event.key === 'End') {
+                event.preventDefault();
+                scrollToSlide(slides.length - 1);
+            }
+        });
+
+        updateUI(0);
+    </script>
+</body>
+</html>
