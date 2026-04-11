@@ -15,6 +15,9 @@ jobs:
   semgrep:
     name: Semgrep scan
     runs-on: ubuntu-latest
+    env:
+      # true: fail job when findings exist, false: report only
+      SEMGREP_STRICT: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,9 +30,15 @@ jobs:
       - name: Install Semgrep
         run: pip install --no-cache-dir semgrep
 
-      - name: Run Semgrep (SARIF + strict gate)
-        # Fail job khi có finding để chặn PR/merge không an toàn, nhưng vẫn xuất SARIF.
-        run: semgrep scan --config auto --error --sarif --output=semgrep.sarif .
+      - name: Run Semgrep (SARIF + optional gate)
+        run: |
+          if [ "$SEMGREP_STRICT" = "true" ]; then
+            echo "Strict mode ON: findings will fail the job."
+            semgrep scan --config auto --error --sarif --output=semgrep.sarif .
+          else
+            echo "Strict mode OFF: findings are reported only."
+            semgrep scan --config auto --sarif --output=semgrep.sarif .
+          fi
 
       - name: Upload SARIF to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v4
