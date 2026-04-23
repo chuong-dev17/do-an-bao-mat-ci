@@ -136,7 +136,7 @@ public class PartsDAO {
         }
     }
 
-    public List<Parts> searchPartbyname(String partName) {
+        public List<Parts> searchPartbyname(String partName) {
         List<Parts> list = new ArrayList<>();
         Connection conn = null;
         String sql = "SELECT [partID]\n"
