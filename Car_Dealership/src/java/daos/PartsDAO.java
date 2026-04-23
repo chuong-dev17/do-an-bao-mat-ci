@@ -173,6 +173,7 @@ public class PartsDAO {
     }
     return list;
 }
+    //w
 
     public void addParts(Parts p) {
         Connection conn = null;
