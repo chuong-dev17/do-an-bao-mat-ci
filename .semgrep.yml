@@ -29,3 +29,27 @@ rules:
     pattern-either:
       - pattern-regex: ">\\s*\\$\\{\\s*(USER|sessionScope|requestScope)\\.[^}]+\\}\\s*<"
       - pattern-regex: "<(input|option|textarea)[^>]*\\bvalue\\s*=\\s*\"\\$\\{\\s*(USER|sessionScope|requestScope)\\.[^}]+\\}\""
+
+  - id: java-hardcoded-db-credential
+    message: "Hardcoded credential in source code"
+    severity: ERROR
+    languages: [java]
+    paths:
+      include:
+        - "Car_Dealership/src/java/utils/DBUtil.java"
+    patterns:
+      - pattern: String $VAR = "$VAL";
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: (?i).*(password|passwd|pwd|secret|token|api[_-]?key|username).*
+
+  - id: java-weak-auth-name-only-login
+    message: "Weak authentication: login query appears to validate only username/name (no password)"
+    severity: WARNING
+    languages: [generic]
+    paths:
+      include:
+        - "Car_Dealership/src/java/daos/UserDAO.java"
+    pattern-either:
+      - pattern-regex: "(?s)loginMechanic\\(String\\s+mechanicName\\).*?SELECT\\s+mechanicID\\s+FROM\\s+Mechanic\\s+WHERE\\s+mechanicName=\\?"
+      - pattern-regex: "(?s)loginSalesPerson\\(String\\s+name\\).*?WHERE\\s+\\[salesName\\]\\s*=\\s*\\?"
