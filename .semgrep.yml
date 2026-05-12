@@ -17,6 +17,7 @@ rules:
         - "**/*.jsp"
     pattern-either:
       - pattern-regex: ">\\s*\\$\\{\\s*param\\.[^}]+\\}\\s*<"
+      - pattern-regex: "\\$\\{\\s*param\\.[^}]+\\}"
       - pattern-regex: "<(input|option|textarea)[^>]*\\bvalue\\s*=\\s*\"\\$\\{\\s*param\\.[^}]+\\}\""
 
   - id: jsp-unescaped-user-el-output

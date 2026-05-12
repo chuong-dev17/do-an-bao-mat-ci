@@ -27,6 +27,8 @@ public class DBUtil {
         conn = DriverManager.getConnection(url, username, password);
         return conn;
     }
+
+    // Đóng kết nối, statement và result set
     
     public static void closeConnection(ResultSet rs, PreparedStatement stm, Connection conn) throws Exception {
         if (rs != null) {
