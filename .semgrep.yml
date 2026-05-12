@@ -1,0 +1,29 @@
+rules:
+  - id: java-xss-jsp-output
+    patterns:
+      - pattern-either:
+          - pattern: ${ $X }
+          - pattern: <%= $X %>
+    message: "Potential XSS vulnerability: Output not escaped"
+    languages: [jsp]
+    severity: WARNING
+
+  - id: jsp-unescaped-expression
+    patterns:
+      - pattern: |
+          <%=... %>
+    message: "Potential XSS: Unescaped JSP expression"
+    languages: [jsp]
+    severity: HIGH
+
+  - id: xss-unescaped-el-variable
+    patterns:
+      - pattern: ${ $VAR }
+      - metavariable-pattern:
+          metavariable: $VAR
+          pattern-either:
+            - patterns:
+                - pattern-regex: '.*\..*'
+    message: "Potential XSS vulnerability: EL variable not escaped with <c:out>"
+    languages: [jsp]
+    severity: MEDIUM
