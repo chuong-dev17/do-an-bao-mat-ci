@@ -16,15 +16,15 @@
                 <form action="UpdateServiceController" method="post" accept-charset="UTF-8">
                     <div class="mb-3">
                         <label class="form-label">Service ID</label>
-                        <input type="text" name="serviceID" class="form-control" value="${l.serviceID}" readonly>
+                        <input type="text" name="serviceID" class="form-control" value="<c:out value='${l.serviceID}'/>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Service Name</label>
-                        <input type="text" name="serviceName" class="form-control" value="${l.serviceName}" required>
+                        <input type="text" name="serviceName" class="form-control" value="<c:out value='${l.serviceName}'/>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Hourly Rate</label>
-                        <input type="number" name="hourlyRate" class="form-control" value="${l.hourlyRate}" required>
+                        <input type="number" name="hourlyRate" class="form-control" value="<c:out value='${l.hourlyRate}'/>" required>
                     </div>
                     <button type="submit" class="btn btn-warning">Update</button>
                     <a href="${pageContext.request.contextPath}/ListServiceController" style="margin-left: 20px">Back</a>

@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
     <head>
@@ -34,7 +35,7 @@
                     <a href="${pageContext.request.contextPath}/ListServiceController" style="margin-left: 20px">Back</a>
                 </form>
                 <!-- Hiá»ƒn thá»‹ lá»—i náº¿u cÃ³ -->
-                <h3 class="text-danger mt-3">${error}</h3>
+                <h3 class="text-danger mt-3"><c:out value="${error}"/></h3>
             </div>
         </div>
 

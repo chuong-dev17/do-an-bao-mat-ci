@@ -61,7 +61,7 @@
                 <div class="sidebar">
                     <h4>Logo</h4>
                     <div class="user-info">
-                        ðŸ”µ ChÃ o má»«ng, ${sessionScope.USER.salesName}!
+                        ðŸ”µ ChÃ o má»«ng, <c:out value="${sessionScope.USER.salesName}"/>!
                     </div>
                     <a href="${pageContext.request.contextPath}/CustomerServlet">ðŸ‘¤ CUSTOMER</a>
                     <a href="${pageContext.request.contextPath}/CarsController">ðŸš— CAR</a>
@@ -81,7 +81,7 @@
                         <label>Address</label> <input type="text" name="custAddress" placeholder="custAddress" required=""> <br>
                         <input type="submit" value="ADD"> 
                     </form>
-                    <h4 style="color: red">${requestScope.custExist}</h4>
+                    <h4 style="color: red"><c:out value="${requestScope.custExist}"/></h4>
                 </div>
             </c:otherwise>
         </c:choose>

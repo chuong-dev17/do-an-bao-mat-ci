@@ -26,7 +26,7 @@
                         Year <input type="number" name="year" required><br>
                         <input type="submit" value="Add">
                     </form>
-                    <h3 style="color: red">${requestScope.carsExist}</h3>
+                    <h3 style="color: red"><c:out value="${requestScope.carsExist}"/></h3>
                 </div>
             </c:otherwise>
         </c:choose>

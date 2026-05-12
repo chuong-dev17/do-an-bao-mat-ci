@@ -26,27 +26,27 @@
                 <form action="UpdateServiceMechanicController" method="post" accept-charset="UTF-8">
                     <div class="mb-3">
                         <label class="form-label">Service Ticket ID</label>
-                        <input type="text" name="serviceTicketID" class="form-control" value="${l.serviceTicketID}" readonly>
+                        <input type="text" name="serviceTicketID" class="form-control" value="<c:out value='${l.serviceTicketID}'/>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Service ID</label>
-                        <input type="text" name="serviceID" class="form-control" value="${l.serviceID}" readonly>
+                        <input type="text" name="serviceID" class="form-control" value="<c:out value='${l.serviceID}'/>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mechanic ID</label>
-                        <input type="text" name="mechanicID" class="form-control" value="${l.mechanicID}" readonly>
+                        <input type="text" name="mechanicID" class="form-control" value="<c:out value='${l.mechanicID}'/>" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Hours</label>
-                        <input type="number" name="hours" class="form-control" value="${l.hours}">
+                        <input type="number" name="hours" class="form-control" value="<c:out value='${l.hours}'/>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Comment</label>
-                        <input type="text" name="comment" class="form-control" value="${l.comment}">
+                        <input type="text" name="comment" class="form-control" value="<c:out value='${l.comment}'/>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Rate</label>
-                        <input type="number" name="rate" class="form-control" value="${l.rate}">
+                        <input type="number" name="rate" class="form-control" value="<c:out value='${l.rate}'/>">
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                     <a href="${pageContext.request.contextPath}/ListServiceController" style="margin-left: 20px">Back</a>
