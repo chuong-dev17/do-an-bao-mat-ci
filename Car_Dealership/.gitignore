@@ -1,0 +1,26 @@
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.iml
+
+# Java outputs
+**/*.class
+hs_err_pid*
+replay_pid*
+*.log
+
+# Build artifacts
+build/
+dist/
+.tmp_war/
+nbbuild/
+nbdist/
+
+# NetBeans machine-local settings
+nbproject/private/
+nbproject/private.properties
+nbproject/private.xml
+nbproject/nbactions.xml
+nbproject/nb-configuration.xml
