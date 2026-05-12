@@ -66,8 +66,8 @@
                             <tbody>
                                 <c:forEach var="sd" items="${salesData}">
                                     <tr>
-                                        <td>${sd.year}</td>
-                                        <td>${sd.totalSold}</td>
+                                        <td><c:out value="${sd.year}"/></td>
+                                        <td><c:out value="${sd.totalSold}"/></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -84,8 +84,8 @@
                             <tbody>
                                 <c:forEach var="pr" items="${partsRevenue}">
                                     <tr>
-                                        <td>${pr.partName}</td>
-                                        <td>${String.format("%.0f", pr.totalRevenue)}</td>
+                                        <td><c:out value="${pr.partName}"/></td>
+                                        <td><c:out value="${pr.totalRevenue}"/></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -105,8 +105,8 @@
                             <tbody>
                                 <c:forEach var="bs" items="${bestSellingCars}">
                                     <tr>
-                                        <td>${bs.model}</td>
-                                        <td>${bs.totalSold}</td>
+                                        <td><c:out value="${bs.model}"/></td>
+                                        <td><c:out value="${bs.totalSold}"/></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -123,8 +123,8 @@
                             <tbody>
                                 <c:forEach var="tm" items="${topMechanics}">
                                     <tr>
-                                        <td>${tm.mechanicID}</td>
-                                        <td>${tm.mechanicName}</td>
+                                        <td><c:out value="${tm.mechanicID}"/></td>
+                                        <td><c:out value="${tm.mechanicName}"/></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

@@ -72,19 +72,19 @@
                 <tbody>
                     <tr>
                         <td>Part ID</td>
-                        <td><input type="text" name="partID" value="${Part.partID}" readonly=""/></td>
+                        <td><input type="text" name="partID" value="<c:out value='${Part.partID}'/>" readonly=""/></td>
                     </tr>
                     <tr>
                         <td>Part Name</td>
-                        <td><input type="text" name="partName" value="${Part.partName}"/></td>
+                        <td><input type="text" name="partName" value="<c:out value='${Part.partName}'/>"/></td>
                     </tr>
                     <tr>
                         <td>Purchase Price</td>
-                        <td><input type="text" name="purchasePrice" value="${Part.purchasePrice}"/></td>
+                        <td><input type="text" name="purchasePrice" value="<c:out value='${Part.purchasePrice}'/>"/></td>
                     </tr>
                     <tr>
                         <td>Retail Price</td>
-                        <td><input type="text" name="retailPrice" value="${Part.retailPrice}"/></td>
+                        <td><input type="text" name="retailPrice" value="<c:out value='${Part.retailPrice}'/>"/></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: center;"><input type="submit" value="Update" /></td>

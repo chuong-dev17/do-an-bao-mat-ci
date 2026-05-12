@@ -75,14 +75,14 @@
                     <tbody>
                         <c:forEach items="${data}" var="c">
                         <tr>
-                            <td>${c.serviceID}</td>
-                            <td>${c.serviceName}</td>
-                            <td class="text-end">${c.hourlyRate} vnđ</td>
+                            <td><c:out value="${c.serviceID}"/></td>
+                            <td><c:out value="${c.serviceName}"/></td>
+                            <td class="text-end"><c:out value="${c.hourlyRate}"/> vnđ</td>
                             <td>
                                 <a href="UpdateServiceController?serviceID=${c.serviceID}" class="btn btn-primary btn-sm btn-custom">
                                     <i class="bi bi-pencil-square"></i> Cập Nhật
                                 </a>
-                                <button class="btn btn-danger btn-sm btn-custom" onclick="doDelete('${c.serviceID}')">
+                                <button type="button" class="btn btn-danger btn-sm btn-custom" data-service-id="<c:out value='${c.serviceID}'/>" onclick="doDelete(this.dataset.serviceId)">
                                     <i class="bi bi-trash"></i> Xóa
                                 </button>
                             </td>

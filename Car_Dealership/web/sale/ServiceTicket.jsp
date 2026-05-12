@@ -58,11 +58,11 @@
                         <tbody>
                             <c:forEach var="s" items="${requestScope.getServiceTicket}">
                                 <tr>
-                                    <td>${s.serviceTicketID}</td>
-                                    <td>${s.dateReceived}</td>
-                                    <td>${s.dateReturned}</td>
-                                    <td>${s.custID}</td>
-                                    <td>${s.carID}</td> 
+                                    <td><c:out value="${s.serviceTicketID}"/></td>
+                                    <td><c:out value="${s.dateReceived}"/></td>
+                                    <td><c:out value="${s.dateReturned}"/></td>
+                                    <td><c:out value="${s.custID}"/></td>
+                                    <td><c:out value="${s.carID}"/></td> 
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -70,16 +70,16 @@
                     
                     <!-- Error Messages -->
                     <c:if test="${not empty requestScope.ERROR}">
-                        <h3 style="color: red">${requestScope.ERROR}</h3>
+                        <h3 style="color: red"><c:out value="${requestScope.ERROR}"/></h3>
                     </c:if>
                     <c:if test="${not empty requestScope.serviceTicketIDExist}">
-                        <h3 style="color: red">${requestScope.serviceTicketIDExist}</h3>
+                        <h3 style="color: red"><c:out value="${requestScope.serviceTicketIDExist}"/></h3>
                     </c:if>
                     <c:if test="${not empty requestScope.CarId}">
-                        <h3 style="color: red">${requestScope.CarId}</h3>
+                        <h3 style="color: red"><c:out value="${requestScope.CarId}"/></h3>
                     </c:if>
                     <c:if test="${not empty requestScope.CustId}">
-                        <h3 style="color: red">${requestScope.CustId}</h3>
+                        <h3 style="color: red"><c:out value="${requestScope.CustId}"/></h3>
                     </c:if>
                 </div>
             </c:otherwise>

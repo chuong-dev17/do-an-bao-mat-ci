@@ -94,6 +94,10 @@
 </head>
 <body>
 <div class="container">
+    <%
+        request.setAttribute("carsList", new CarsDAO().getList());
+        request.setAttribute("customerList", new CustomerDAO().getList());
+    %>
     <form action="${pageContext.request.contextPath}/CreateInvoiceController" method="post">
         <div class="form-group">
             <label for="invoiceID">Invoice ID:</label>
@@ -107,22 +111,16 @@
 
         <div class="form-group">
             <label for="salesID">Sales ID:</label>
-            <input type="text" name="salesID" value="${USER.salesID}" readonly>
+            <input type="text" name="salesID" value="<c:out value='${USER.salesID}'/>" readonly>
         </div>
 
         <div class="form-group">
             <label for="carID">Car ID:</label>
             <select name="carID" id="carID" required>
                 <option value="">-- Select Car ID --</option>
-                <%
-                    CarsDAO carsDAO = new CarsDAO();
-                    List<CarsDTO> carsList = carsDAO.getList();
-                    for (CarsDTO car : carsList) {
-                %>
-                    <option value="<%= car.getCarID() %>"><%= car.getCarID() %> - <%= car.getModel() %> - <%= car.getColour() %> - <%= car.getYear() %></option>
-                <%
-                    }
-                %>
+                <c:forEach var="car" items="${carsList}">
+                    <option value="<c:out value='${car.carID}'/>"><c:out value="${car.carID}"/> - <c:out value="${car.model}"/> - <c:out value="${car.colour}"/> - <c:out value="${car.year}"/></option>
+                </c:forEach>
             </select>
         </div>
 
@@ -130,16 +128,9 @@
             <label for="custID">Customer ID:</label>
             <select name="custID" id="custID" required>
                 <option value="">-- Select Customer ID --</option>
-                <%
-                    CustomerDAO customerDAO = new CustomerDAO();
-                    List<CustomerDTO> customerList = customerDAO.getList();
-                    
-                    for (CustomerDTO customer : customerList) {
-                %>
-                    <option value="<%= customer.getCustID() %>"><%= customer.getCustID() %> - <%= customer.getCustName() %></option>
-                <%
-                    }
-                %>
+                <c:forEach var="customer" items="${customerList}">
+                    <option value="<c:out value='${customer.custID}'/>"><c:out value="${customer.custID}"/> - <c:out value="${customer.custName}"/></option>
+                </c:forEach>
             </select>
         </div>
 
@@ -149,7 +140,7 @@
     </form>
 
     <div class="message">
-        <h3>${message}</h3>
+        <h3><c:out value="${message}"/></h3>
     </div>
 </div>
 

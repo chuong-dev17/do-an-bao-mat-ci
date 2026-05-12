@@ -78,11 +78,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="text-center">${InvoiceDetail.invoiceID}</td>
-                            <td class="text-center">${InvoiceDetail.invoiceDate}</td>
-                            <td class="text-center">${InvoiceDetail.salesID}</td>
-                            <td class="text-center">${InvoiceDetail.carID}</td>
-                            <td class="text-center">${InvoiceDetail.custID}</td>
+                            <td class="text-center"><c:out value="${InvoiceDetail.invoiceID}"/></td>
+                            <td class="text-center"><c:out value="${InvoiceDetail.invoiceDate}"/></td>
+                            <td class="text-center"><c:out value="${InvoiceDetail.salesID}"/></td>
+                            <td class="text-center"><c:out value="${InvoiceDetail.carID}"/></td>
+                            <td class="text-center"><c:out value="${InvoiceDetail.custID}"/></td>
                         </tr>
                     </tbody>
                 </table>

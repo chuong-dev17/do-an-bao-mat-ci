@@ -97,7 +97,7 @@
                     <h2>Customer Page</h2>
                     <h3><a href="sale/AddCustomer.jsp">Add Customer</a></h3>
                     <form action="${pageContext.request.contextPath}/CustomerServlet" class="search-box">
-                        <input type="text" name="custName" placeholder="TÃªn khÃ¡ch hÃ ng" value="${param.custName}">
+                        <input type="text" name="custName" placeholder="TÃªn khÃ¡ch hÃ ng" value="<c:out value='${param.custName}'/>">
                         <input type="submit" value="TÃ¬m kiáº¿m">
                     </form>
                     <table>
@@ -112,17 +112,17 @@
                         </tr>
                         <c:forEach items="${requestScope.custList}" var="c">
                             <tr>
-                                <td>${c.custID}</td>
-                                <td>${c.custName}</td>
-                                <td>${c.phone}</td>
-                                <td>${c.sex}</td>
-                                <td>${c.cusAddress}</td>
+                                <td><c:out value="${c.custID}"/></td>
+                                <td><c:out value="${c.custName}"/></td>
+                                <td><c:out value="${c.phone}"/></td>
+                                <td><c:out value="${c.sex}"/></td>
+                                <td><c:out value="${c.cusAddress}"/></td>
                                 <td><a href="${pageContext.request.contextPath}/UpdateCustomerController?custID=${c.custID}">Update</a></td>
-                                <td><a href="#" onclick="doDelete('${c.custID}')">Delete</a></td>
+                                <td><a href="#" data-cust-id="<c:out value='${c.custID}'/>" onclick="doDelete(this.dataset.custId)">Delete</a></td>
                             </tr>
                         </c:forEach>
                     </table>
-                    <h3 class="error-message">${requestScope.Idexist}</h3>
+                    <h3 class="error-message"><c:out value="${requestScope.Idexist}"/></h3>
                 </div>
             </c:otherwise>
         </c:choose>

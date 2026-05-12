@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -58,7 +59,7 @@
         </form>
             <br>
             <a href="index.html">back</a>
-               <h6 style="color: red">${param.errorMechanic}</h6>
+               <h6 style="color: red"><c:out value="${param.errorMechanic}"/></h6>
     </div>
 </div>
      

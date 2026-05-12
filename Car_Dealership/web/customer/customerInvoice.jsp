@@ -82,7 +82,7 @@
                     <tbody>
                         <c:forEach items="${dataInvoice}" var="l">
                             <tr>
-                                <td class="text-center">${l.invoiceID}</td>
+                                <td class="text-center"><c:out value="${l.invoiceID}"/></td>
                                 <td class="text-center">
                                     <a href="DetailInvoice?invoiceID=${l.invoiceID}" class="btn btn-sm btn-details">
                                         <i class="bi bi-eye"></i> Xem Chi Tiết

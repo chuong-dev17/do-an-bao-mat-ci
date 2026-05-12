@@ -82,7 +82,7 @@
                     <tbody>
                         <c:forEach items="${data}" var="l">
                             <tr>
-                                <td class="text-center">${l.serviceTicketID}</td>
+                                <td class="text-center"><c:out value="${l.serviceTicketID}"/></td>
                                 <td class="text-center">
                                     <a href="${pageContext.request.contextPath}/DetailServiceTicketController?serviceTicketID=${l.serviceTicketID}" class="btn btn-sm btn-details">
                                         <i class="bi bi-eye"></i> Xem Chi Tiết

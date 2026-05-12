@@ -80,11 +80,11 @@
                     <tbody>
                         <c:forEach items="${data}" var="l">
                         <tr>
-                            <td class="text-center">${l.serviceTicketID}</td>
-                            <td class="text-center">${l.dateReceived}</td>
-                            <td class="text-center">${l.dateReturned}</td>
-                            <td class="text-center">${l.custID}</td>
-                            <td class="text-center">${l.carID}</td>
+                            <td class="text-center"><c:out value="${l.serviceTicketID}"/></td>
+                            <td class="text-center"><c:out value="${l.dateReceived}"/></td>
+                            <td class="text-center"><c:out value="${l.dateReturned}"/></td>
+                            <td class="text-center"><c:out value="${l.custID}"/></td>
+                            <td class="text-center"><c:out value="${l.carID}"/></td>
                             <td class="text-center">
                                 <a href="serviceTicketDetails.jsp?id=${l.serviceTicketID}" class="btn btn-sm btn-details">
                                     <i class="bi bi-eye"></i> Xem Chi Tiết

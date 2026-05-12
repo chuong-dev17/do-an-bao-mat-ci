@@ -56,11 +56,11 @@
             <tbody>
                 <c:forEach items="${detailM}" var="l">
                     <tr>
-                        <td class="text-center">${l.serviceID}</td>
-                        <td class="text-center">${l.mechanicID}</td>
-                        <td class="text-center">${l.hours}</td>
-                        <td>${l.comment}</td>
-                        <td class="text-end">${l.rate} vnÄ‘</td>
+                        <td class="text-center"><c:out value="${l.serviceID}"/></td>
+                        <td class="text-center"><c:out value="${l.mechanicID}"/></td>
+                        <td class="text-center"><c:out value="${l.hours}"/></td>
+                        <td><c:out value="${l.comment}"/></td>
+                        <td class="text-end"><c:out value="${l.rate}"/> vnÄ‘</td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -77,9 +77,9 @@
             <tbody>
                 <c:forEach items="${detailP}" var="p">
                     <tr>
-                        <td class="text-center">${p.partID}</td>
-                        <td class="text-center">${p.numberUsed}</td>
-                        <td class="text-center">${p.price}</td>
+                        <td class="text-center"><c:out value="${p.partID}"/></td>
+                        <td class="text-center"><c:out value="${p.numberUsed}"/></td>
+                        <td class="text-center"><c:out value="${p.price}"/></td>
                     </tr>
                 </c:forEach>
             </tbody>

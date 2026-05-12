@@ -60,7 +60,7 @@
             <!-- Search Form -->
             <form method="get" action="SearchParts" accept-charset="UTF-8" class="mb-4">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="search" value="${param.search}" placeholder="Search parts..." />
+                    <input type="text" class="form-control" name="search" value="<c:out value='${param.search}'/>" placeholder="Search parts..." />
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>
@@ -79,12 +79,12 @@
                 <tbody>
                     <c:forEach items="${data}" var="l">
                         <tr>
-                            <td>${l.partID}</td>
-                            <td>${l.partName}</td>
-                            <td>${l.purchasePrice}</td>
-                            <td>${l.retailPrice}</td>
+                            <td><c:out value="${l.partID}"/></td>
+                            <td><c:out value="${l.partName}"/></td>
+                            <td><c:out value="${l.purchasePrice}"/></td>
+                            <td><c:out value="${l.retailPrice}"/></td>
                             <td>
-                                <button class="btn btn-danger btn-sm btn-custom" onclick="doDelete('${l.partID}')">
+                                <button type="button" class="btn btn-danger btn-sm btn-custom" data-part-id="<c:out value='${l.partID}'/>" onclick="doDelete(this.dataset.partId)">
                                     <i class="bi bi-trash"></i> Xóa
                                 </button>
                                 <a href="UpdateParts?partID=${l.partID}" class="btn btn-warning btn-sm">Update</a>

@@ -42,15 +42,15 @@
         <form action="searchSTController" method="post">
             <div class="mb-3">
                 <label for="custID" class="form-label">Customer ID</label>
-                <input type="text" class="form-control" id="custID" name="custID" value="${param.custID}" placeholder="Enter Customer ID">
+                <input type="text" class="form-control" id="custID" name="custID" value="<c:out value='${param.custID}'/>" placeholder="Enter Customer ID">
             </div>
             <div class="mb-3">
                 <label for="carID" class="form-label">Car ID</label>
-                <input type="text" class="form-control" id="carID" name="carID" value="${param.carID}" placeholder="Enter Car ID">
+                <input type="text" class="form-control" id="carID" name="carID" value="<c:out value='${param.carID}'/>" placeholder="Enter Car ID">
             </div>
             <div class="mb-3">
                 <label for="dateReceived" class="form-label">Date Received</label>
-                <input type="date" class="form-control" id="dateReceived" name="dateReceived" value="${param.dateReceived}" placeholder="Enter Date Received">
+                <input type="date" class="form-control" id="dateReceived" name="dateReceived" value="<c:out value='${param.dateReceived}'/>" placeholder="Enter Date Received">
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
@@ -72,11 +72,11 @@
             <tbody>
                 <c:forEach var="s" items="${data}">
                     <tr>
-                        <td>${s.serviceTicketID}</td>
-                        <td>${s.dateReceived}</td>
-                        <td>${s.dateReturned}</td>
-                        <td>${s.custID}</td>
-                        <td>${s.carID}</td>
+                                    <td><c:out value="${s.serviceTicketID}"/></td>
+                                    <td><c:out value="${s.dateReceived}"/></td>
+                                    <td><c:out value="${s.dateReturned}"/></td>
+                                    <td><c:out value="${s.custID}"/></td>
+                                    <td><c:out value="${s.carID}"/></td> 
                     </tr>
                 </c:forEach>
             </tbody>

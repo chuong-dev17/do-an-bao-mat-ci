@@ -21,23 +21,23 @@
                     <form action="${pageContext.request.contextPath}/UpdateCarController" method="post">
                         <div class="mb-3">
                             <label class="form-label">Car ID</label>
-                            <input type="number" class="form-control" name="carID" value="${car.carID}" readonly>
+                            <input type="number" class="form-control" name="carID" value="<c:out value='${car.carID}'/>" readonly>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Serial Number</label>
-                            <input type="text" class="form-control" name="serialNumber" value="${car.serialNumber}" required>
+                            <input type="text" class="form-control" name="serialNumber" value="<c:out value='${car.serialNumber}'/>" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Model</label>
-                            <input type="text" class="form-control" name="model" value="${car.model}" required>
+                            <input type="text" class="form-control" name="model" value="<c:out value='${car.model}'/>" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Color</label>
-                            <input type="text" class="form-control" name="colour" value="${car.colour}" required>
+                            <input type="text" class="form-control" name="colour" value="<c:out value='${car.colour}'/>" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Year</label>
-                            <input type="number" class="form-control" name="year" value="${car.year}" required>
+                            <input type="number" class="form-control" name="year" value="<c:out value='${car.year}'/>" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>

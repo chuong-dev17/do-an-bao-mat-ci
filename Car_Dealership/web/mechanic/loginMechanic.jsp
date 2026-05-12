@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
     <head>
@@ -64,7 +65,7 @@
                 <a href="index.html">back</a>
 
                 <!-- Hiển thị lỗi đăng nhập nếu có -->
-                <h6 class="error-message">${ERROR_MESSAGE}</h6>
+                <h6 class="error-message"><c:out value="${ERROR_MESSAGE}"/></h6>
             </div>
         </div>
 

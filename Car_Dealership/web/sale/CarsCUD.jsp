@@ -35,20 +35,20 @@
                     <form action="${pageContext.request.contextPath}/CarsController" accept-charset="UTF-8" method="GET" class="my-3">
                         <div class="form-group">
                             <label for="serialNumber">Serial Number</label>
-                            <input type="text" class="form-control" id="serialNumber" name="serialNumber" value="${param.serialNumber}">
+                            <input type="text" class="form-control" id="serialNumber" name="serialNumber" value="<c:out value='${param.serialNumber}'/>">
                         </div>
                         <div class="form-group">
                             <label for="model">Model</label>
-                            <input type="text" class="form-control" id="model" name="model" value="${param.model}">
+                            <input type="text" class="form-control" id="model" name="model" value="<c:out value='${param.model}'/>">
                         </div>
                         <div class="form-group">
                             <label for="year">Year</label>
-                            <input type="number" class="form-control" id="year" name="year" value="${param.year}">
+                            <input type="number" class="form-control" id="year" name="year" value="<c:out value='${param.year}'/>">
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Search</button>
                     </form>
 
-                    <h3 style="color: red">${requestScope.carCheck}</h3>
+                    <h3 style="color: red"><c:out value="${requestScope.carCheck}"/></h3>
 
                     <table class="table table-bordered">
                         <thead>
@@ -64,13 +64,13 @@
                         <tbody>
                             <c:forEach var="c" items="${requestScope.carList}">
                                 <tr>
-                                    <td>${c.carID}</td>
-                                    <td>${c.serialNumber}</td>
-                                    <td>${c.model}</td>
-                                    <td>${c.colour}</td>
-                                    <td>${c.year}</td>
+                                    <td><c:out value="${c.carID}"/></td>
+                                    <td><c:out value="${c.serialNumber}"/></td>
+                                    <td><c:out value="${c.model}"/></td>
+                                    <td><c:out value="${c.colour}"/></td>
+                                    <td><c:out value="${c.year}"/></td>
                                     <td><a href="${pageContext.request.contextPath}/UpdateCarController?carId=${c.carID}" class="btn btn-warning">Update</a>
-                                        <button class="btn btn-danger btn-custom" onclick="doDelete('${c.carID}')">
+                                        <button type="button" class="btn btn-danger btn-custom" data-car-id="<c:out value='${c.carID}'/>" onclick="doDelete(this.dataset.carId)">
                                             <i class="bi bi-trash"></i> XÃ³a
                                         </button>
                                     </td>

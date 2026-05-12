@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
     <head>
@@ -67,28 +68,28 @@
             <form action="${pageContext.request.contextPath}/UpdateProfileController" method="post" accept-charset="UTF-8">
                 <div class="form-group">
                     <label for="custName">Full Name</label>
-                    <input type="text" name="custName" id="custName" value="${USER.custName}" class="form-control" required />
+                    <input type="text" name="custName" id="custName" value="<c:out value='${USER.custName}'/>" class="form-control" required />
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone Number</label>
-                    <input type="text" name="phone" id="phone" value="${USER.phone}" class="form-control" required />
+                    <input type="text" name="phone" id="phone" value="<c:out value='${USER.phone}'/>" class="form-control" required />
                 </div>
                 <div class="form-group">
                     <label for="sex">Gender</label>
                     <select name="sex" id="sex" class="form-select" required>
-                        <option value="M" ${USER.sex == 'M' ? 'selected' : ''}>M</option>
-                        <option value="F" ${USER.sex == 'F' ? 'selected' : ''}>F</option>
-                        <option value="other" ${USER.sex == 'other' ? 'selected' : ''}>Other</option>
+                        <option value="M" <c:if test="${USER.sex == 'M'}">selected</c:if>>M</option>
+                        <option value="F" <c:if test="${USER.sex == 'F'}">selected</c:if>>F</option>
+                        <option value="other" <c:if test="${USER.sex == 'other'}">selected</c:if>>Other</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="cusAddress">Address</label>
-                    <input type="text" name="cusAddress" id="cusAddress" value="${USER.cusAddress}" class="form-control" required />
+                    <input type="text" name="cusAddress" id="cusAddress" value="<c:out value='${USER.cusAddress}'/>" class="form-control" required />
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
             <br>
-            <h6 style="color: #1abc9c">${success}</h6>
+            <h6 style="color: #1abc9c"><c:out value="${success}"/></h6>
         </div>
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

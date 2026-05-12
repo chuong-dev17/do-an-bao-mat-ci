@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
     <head>
@@ -81,7 +82,7 @@
                 <a class="navbar-brand d-flex align-items-center" href="#">
                     <img src="./img/saler_icon.png" alt="Logo">
                 </a>
-                <span class="welcome-text"><i class="bi bi-person-circle"></i> ChÃ o má»«ng, ${USER.salesName}!</span>
+                <span class="welcome-text"><i class="bi bi-person-circle"></i> ChÃ o má»«ng, <c:out value="${USER.salesName}"/>!</span>
             </div>
         </nav>
 

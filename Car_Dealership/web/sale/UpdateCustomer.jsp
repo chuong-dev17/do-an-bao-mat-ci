@@ -37,15 +37,15 @@
                     <c:set var="c" value="${requestScope.custInforUpdate}"/>
                     <form action="${pageContext.request.contextPath}/UpdateCustomerController" accept-charset="UTF-8" method="post">
                         <label>ID</label>
-                        <input type="text" name="custID" readonly value="${c.custID}" class="form-control"> <br>
+                        <input type="text" name="custID" readonly value="<c:out value='${c.custID}'/>" class="form-control"> <br>
                         <label>Name</label>
-                        <input type="text" name="custName" value="${c.custName}" class="form-control"> <br>
+                        <input type="text" name="custName" value="<c:out value='${c.custName}'/>" class="form-control"> <br>
                         <label>Phone</label>
-                        <input type="text" name="custPhone" value="${c.phone}" class="form-control"> <br>
+                        <input type="text" name="custPhone" value="<c:out value='${c.phone}'/>" class="form-control"> <br>
                         <label>Customer Sex</label>
-                        <input type="text" name="custSex" value="${c.sex}" class="form-control"> <br>
+                        <input type="text" name="custSex" value="<c:out value='${c.sex}'/>" class="form-control"> <br>
                         <label>Address</label>
-                        <input type="text" name="custAddress" value="${c.cusAddress}" class="form-control"> <br>
+                        <input type="text" name="custAddress" value="<c:out value='${c.cusAddress}'/>" class="form-control"> <br>
                         <input type="submit" value="UPDATE" class="btn btn-primary">
                     </form>
                 </div>
