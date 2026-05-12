@@ -1,29 +1,27 @@
 rules:
-  - id: java-xss-jsp-output
-    patterns:
-      - pattern-either:
-          - pattern: ${ $X }
-          - pattern: <%= $X %>
-    message: "Potential XSS vulnerability: Output not escaped"
-    languages: [jsp]
+  - id: jsp-unescaped-scriptlet-output
+    message: "Potential XSS: unescaped JSP scriptlet output (<%= ... %>)"
+    severity: ERROR
+    languages: [generic]
+    paths:
+      include:
+        - "**/*.jsp"
+    pattern-regex: "<%=\\s*[^%]+%>"
+
+  - id: jsp-unescaped-param-el-output
+    message: "Potential XSS: unescaped request parameter output (${param.*})"
     severity: WARNING
+    languages: [generic]
+    paths:
+      include:
+        - "**/*.jsp"
+    pattern-regex: "\\$\\{\\s*param\\.[^}]+\\}"
 
-  - id: jsp-unescaped-expression
-    patterns:
-      - pattern: |
-          <%=... %>
-    message: "Potential XSS: Unescaped JSP expression"
-    languages: [jsp]
-    severity: HIGH
-
-  - id: xss-unescaped-el-variable
-    patterns:
-      - pattern: ${ $VAR }
-      - metavariable-pattern:
-          metavariable: $VAR
-          pattern-either:
-            - patterns:
-                - pattern-regex: '.*\..*'
-    message: "Potential XSS vulnerability: EL variable not escaped with <c:out>"
-    languages: [jsp]
-    severity: MEDIUM
+  - id: jsp-unescaped-user-el-output
+    message: "Potential XSS: unescaped user/session/request EL output"
+    severity: WARNING
+    languages: [generic]
+    paths:
+      include:
+        - "**/*.jsp"
+    pattern-regex: "\\$\\{\\s*(USER|sessionScope|requestScope)\\.[^}]+\\}"
