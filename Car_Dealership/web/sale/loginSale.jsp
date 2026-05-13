@@ -52,14 +52,14 @@
 
         <form action="${pageContext.request.contextPath}/LoginSalerController" method="post">
             <div class="mb-3">
-                <input type="text" class="form-control" id="uname" name="name" placeholder="Nhập tên của bạn" required>
+                <input type="text" name="name" value="${requestScope.name}">
             </div>
 
             <button type="submit" name="login" value="Login" class="btn btn-login w-100">Đăng Nhập</button>
         </form>
             <br>
             <a href="index.html">back</a>
-               <h6 style="color: red">${ERROR_MESSAGE}</h6>
+               <h6 style="color: red"><c:out value="${ERROR_MESSAGE}"/></h6>
     </div>
 </div>
      
