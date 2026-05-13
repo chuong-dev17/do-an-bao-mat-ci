@@ -4,25 +4,23 @@ Tài liệu này tóm tắt 3 lỗi bảo mật dễ demo nhất trong dự án,
 
 ## 1) XSS (Cross-Site Scripting)
 
-- File: [Car_Dealership/web/xss-demo.jsp](../Car_Dealership/web/xss-demo.jsp)
+- File: [Car_Dealership/web/.jsp](../Car_Dealership/web/sale/loginSale.jsp)
 - Dòng lỗi:
-  - [Dòng 17](../Car_Dealership/web/xss-demo.jsp#L17): `${param.q}` được in thẳng ra HTML
-  - [Dòng 18](../Car_Dealership/web/xss-demo.jsp#L18): `<%= request.getParameter("q") %>` in scriptlet trực tiếp
-
+  - [Dòng 62](../Car_Dealership/web/sale/loginSale.jsp#L62): `${ERROR_MESSAGE}` được in thẳng ra HTML
 ### Vì sao là lỗi
 
 Giá trị từ người dùng được render thẳng vào trang mà không escape. Nếu nhập payload như `<script>alert(1)</script>`, trình duyệt sẽ thực thi JavaScript.
 
 ### Cách fix
 
-- Dùng `<c:out value="${param.q}"/>` thay cho `${param.q}`
+- Dùng `<c:out value="${ERROR_MESSAGE}"/>` thay cho `${ERROR_MESSAGE}`
 - Tránh dùng `<%= ... %>` để in dữ liệu người dùng
 - Nếu cần hiển thị trong input/textarea, vẫn phải escape đúng context
 
 ### Ví dụ sửa
 
 ```jsp
-<p>Safe output: <c:out value="${param.q}"/></p>
+<p>Safe output: <c:out value="${ERROR_MESSAGE}"/></p>
 ```
 
 ## 2) Hardcoded secret/password

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 public class LoginSalerController extends HttpServlet {
 
     public static final String SUCCESS = "sale/salePage.jsp";
-    public static final String ERROR = "invalid.html";
+    public static final String ERROR = "sale/loginSale.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -89,7 +89,7 @@ public class LoginSalerController extends HttpServlet {
                 session.setAttribute("USER", user);
                 url = SUCCESS;
             } else {
-                request.setAttribute("ERROR_MESSAGE", "Tên không hợp lệ hoặc không tồn tại!");
+                request.setAttribute("ERROR_MESSAGE", name);
             }
         } catch (Exception e) {
             request.setAttribute("ERROR_MESSAGE", "Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại sau!");

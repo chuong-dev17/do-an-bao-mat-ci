@@ -50,7 +50,7 @@
         
         <h3 class="mb-3">Đăng Nhập Nhân Viên Bán Hàng</h3>
 
-        <form action=" ${pageContext.request.contextPath}/LoginSalerController" method="post">
+        <form action="${pageContext.request.contextPath}/LoginSalerController" method="post">
             <div class="mb-3">
                 <input type="text" class="form-control" id="uname" name="name" placeholder="Nhập tên của bạn" required>
             </div>
@@ -59,7 +59,7 @@
         </form>
             <br>
             <a href="index.html">back</a>
-               <h6 style="color: red"><c:out value="${param.errorMechanic}"/></h6>
+               <h6 style="color: red">${ERROR_MESSAGE}</h6>
     </div>
 </div>
      
