@@ -14,7 +14,7 @@ rules:
     languages: [generic]
     paths:
       include:
-        - "**/loginSale.jsp"
+        - "**/*.jsp"
     pattern-either:
       - pattern-regex: ">\\s*\\$\\{\\s*param\\.[^}]+\\}\\s*<"
       - pattern-regex: "\\$\\{\\s*param\\.[^}]+\\}"
@@ -26,7 +26,7 @@ rules:
     languages: [generic]
     paths:
       include:
-        - "**/loginSale.jsp"
+        - "**/*.jsp"
     pattern-either:
       - pattern-regex: ">\\s*\\$\\{\\s*(USER|sessionScope|requestScope)\\.[^}]+\\}\\s*<"
       - pattern-regex: "<(input|option|textarea)[^>]*\\bvalue\\s*=\\s*\"\\$\\{\\s*(USER|sessionScope|requestScope)\\.[^}]+\\}\""
