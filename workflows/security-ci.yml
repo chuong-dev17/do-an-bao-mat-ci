@@ -31,7 +31,7 @@ jobs:
         # Không fail job khi có finding; log vẫn hiển thị số cảnh báo. SARIF upload lên Code Scanning (repo public).
         run: |
           set +e
-          semgrep scan --config auto --sarif --output=semgrep.sarif .
+          semgrep scan --config auto --sarif --output=semgrep.sarif --exclude Car_Dealership/build/** Car_Dealership/src Car_Dealership/web
           true
 
       - name: Upload SARIF to GitHub Code Scanning
