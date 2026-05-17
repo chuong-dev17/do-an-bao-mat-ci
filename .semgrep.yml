@@ -37,7 +37,7 @@ rules:
     languages: [java]
     paths:
       include:
-        - "Car_Dealership/src/java/utils/DBUtil.java"
+        - "**/Car_Dealership/src/java/utils/DBUtil.java"
     patterns:
       - pattern: String $VAR = "$VAL";
       - metavariable-regex:
@@ -50,7 +50,7 @@ rules:
     languages: [generic]
     paths:
       include:
-        - "Car_Dealership/src/java/daos/UserDAO.java"
+        - "**/Car_Dealership/src/java/daos/UserDAO.java"
     pattern-either:
       - pattern-regex: "(?s)loginMechanic\\(String\\s+mechanicName\\).*?SELECT\\s+mechanicID\\s+FROM\\s+Mechanic\\s+WHERE\\s+mechanicName=\\?"
       - pattern-regex: "(?s)loginSalesPerson\\(String\\s+name\\).*?WHERE\\s+\\[salesName\\]\\s*=\\s*\\?"
