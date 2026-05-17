@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+﻿<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -52,7 +52,7 @@
 
         <form action="${pageContext.request.contextPath}/LoginSalerController" method="post">
             <div class="mb-3">
-                <input type="text" name="name" value="${requestScope.name}">
+                <input type="text" class="form-control" id="uname" name="name" value="${name}" placeholder="Nhập tên của bạn" required>
             </div>
 
             <button type="submit" name="login" value="Login" class="btn btn-login w-100">Đăng Nhập</button>
@@ -68,3 +68,4 @@
 
 </body>
 </html>
+
