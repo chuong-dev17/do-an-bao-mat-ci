@@ -29,6 +29,20 @@ public class UserDAO {
         return expectedHash.equalsIgnoreCase(hex.toString());
     }
 
+    private String hashPassword(String rawPassword) throws NoSuchAlgorithmException {
+        if (rawPassword == null) {
+            return null;
+        }
+
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hashBytes = digest.digest(rawPassword.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hex = new StringBuilder(hashBytes.length * 2);
+        for (byte hashByte : hashBytes) {
+            hex.append(String.format("%02x", hashByte & 0xff));
+        }
+        return hex.toString();
+    }
+
     public CustomerDTO loginCustomer(String custName, String phone) throws Exception {
         CustomerDTO customer = null;
         Connection conn = null;
@@ -64,15 +78,20 @@ public class UserDAO {
         try {
             conn = DBUtil.getConnection();
             if (conn != null) {
-                String sql = "SELECT mechanicID FROM Mechanic WHERE LOWER(mechanicName)=LOWER(?)";
+                String expectedHash = System.getenv("MECHANIC_LOGIN_HASH");
+                if (expectedHash == null || expectedHash.isBlank()) {
+                    return null;
+                }
+
+                String providedHash = hashPassword(password);
+                String sql = "SELECT mechanicID FROM Mechanic WHERE LOWER(mechanicName)=LOWER(?) AND ? = ?";
                 PreparedStatement st = conn.prepareStatement(sql);
                 st.setString(1, mechanicName);
+                st.setString(2, providedHash);
+                st.setString(3, expectedHash);
                 ResultSet rs = st.executeQuery();
                 if (rs.next()) {
-                    String expectedHash = System.getenv("MECHANIC_LOGIN_HASH");
-                    if (matchesHash(password, expectedHash)) {
-                        mechanic = new MechanicDTO(rs.getString("mechanicID"), mechanicName);
-                    }
+                    mechanic = new MechanicDTO(rs.getString("mechanicID"), mechanicName);
                 }
             }
         } catch (ClassNotFoundException | SQLException | NamingException e) {
@@ -98,31 +117,37 @@ public class UserDAO {
 
             cnn = DBUtil.getConnection();
 
+            String expectedHash = System.getenv("SALESPERSON_LOGIN_HASH");
+            if (expectedHash == null || expectedHash.isBlank()) {
+                return null;
+            }
+
+            String providedHash = hashPassword(password);
+
             String sql = "SELECT [salesID]\n"
                     + "      ,[salesName]\n"
                     + "      ,[birthday]\n"
                     + "      ,[sex]\n"
                     + "      ,[salesAddress]\n"
                     + "  FROM [dbo].[SalesPerson]\n"
-                    + " WHERE LOWER([salesName]) = LOWER(?) ";
+                    + " WHERE LOWER([salesName]) = LOWER(?) AND ? = ? ";
 
             PreparedStatement st = cnn.prepareStatement(sql);
             st.setString(1, name);
+            st.setString(2, providedHash);
+            st.setString(3, expectedHash);
 
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
-                String expectedHash = System.getenv("SALESPERSON_LOGIN_HASH");
-                if (matchesHash(password, expectedHash)) {
-                    SalesPersonDTO s = new SalesPersonDTO();
-                    s.setSalesID(rs.getString("salesID"));
-                    s.setSalesName(rs.getString("salesName"));
-                    s.setBirthday(rs.getString("birthday"));
-                    s.setSex(rs.getString("sex"));
-                    s.setSalesAddress(rs.getString("salesAddress"));
+                SalesPersonDTO s = new SalesPersonDTO();
+                s.setSalesID(rs.getString("salesID"));
+                s.setSalesName(rs.getString("salesName"));
+                s.setBirthday(rs.getString("birthday"));
+                s.setSex(rs.getString("sex"));
+                s.setSalesAddress(rs.getString("salesAddress"));
 
-                    return s;
-                }
+                return s;
 
             }
 

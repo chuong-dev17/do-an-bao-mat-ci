@@ -15,7 +15,7 @@
         <button type="submit">Submit</button>
     </form>
 
-    <% request.setAttribute("q", request.getParameter("q")); %>
+    <c:set var="q" value="${param.q}" />
     <p>Safe output: <c:out value="${q}" /></p>
 </body>
 </html>

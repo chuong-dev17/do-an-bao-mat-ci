@@ -90,9 +90,11 @@ public class LoginSalerController extends HttpServlet {
                 session.setAttribute("USER", user);
                 url = SUCCESS;
             } else {
+                request.setAttribute("name", name);
                 request.setAttribute("ERROR_MESSAGE", "Tên hoặc mật khẩu không hợp lệ!");
             }
         } catch (Exception e) {
+            request.setAttribute("name", request.getParameter("name"));
             request.setAttribute("ERROR_MESSAGE", "Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại sau!");
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

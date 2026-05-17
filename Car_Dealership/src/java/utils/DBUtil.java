@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 import javax.naming.NamingException;
 
 /**
@@ -20,8 +21,9 @@ public class DBUtil {
     
     public static Connection getConnection() throws ClassNotFoundException, SQLException, NamingException {
         Connection conn = null;
-        String username = System.getenv("DB_USERNAME");
-        String password = System.getenv("DB_PASSWORD");
+        Map<String, String> env = System.getenv();
+        String username = env.get("DB_USERNAME");
+        String password = env.get("DB_PASSWORD");
         if (username == null || username.isBlank() || password == null || password.isBlank()) {
             throw new IllegalStateException("Missing DB_USERNAME or DB_PASSWORD environment variable.");
         }
