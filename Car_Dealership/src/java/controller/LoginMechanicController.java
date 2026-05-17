@@ -84,14 +84,15 @@ public class LoginMechanicController extends HttpServlet {
         String url = ERROR;
         try {
             String name = request.getParameter("name");
+            String password = request.getParameter("password");
             UserDAO dao = new UserDAO();
-            MechanicDTO user = dao.loginMechanic(name);
+            MechanicDTO user = dao.loginMechanic(name, password);
 
             if (user != null) {
                 session.setAttribute("USER", user);
                 url = SUCCESS;
             } else {
-                request.setAttribute("ERROR_MESSAGE", "Tên không hợp lệ hoặc không tồn tại!");
+                request.setAttribute("ERROR_MESSAGE", "Tên hoặc mật khẩu không hợp lệ!");
                 url = ERROR;
             }
         } catch (Exception e) {

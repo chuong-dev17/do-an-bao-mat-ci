@@ -6,6 +6,8 @@ rules:
     paths:
       include:
         - "**/*.jsp"
+        exclude:
+          - "**/build/**"
     pattern-regex: "<%=\\s*[^%]+%>"
 
   - id: jsp-unescaped-param-el-output
@@ -15,6 +17,8 @@ rules:
     paths:
       include:
         - "**/*.jsp"
+        exclude:
+          - "**/build/**"
     pattern-either:
       - pattern-regex: ">\\s*\\$\\{\\s*param\\.[^}]+\\}\\s*<"
       - pattern-regex: "\\$\\{\\s*param\\.[^}]+\\}"
@@ -27,6 +31,8 @@ rules:
     paths:
       include:
         - "**/*.jsp"
+        exclude:
+          - "**/build/**"
     pattern-either:
       - pattern-regex: ">\\s*\\$\\{\\s*(USER|sessionScope|requestScope)\\.[^}]+\\}\\s*<"
       - pattern-regex: "<(input|option|textarea)[^>]*\\bvalue\\s*=\\s*\"\\$\\{\\s*(USER|sessionScope|requestScope)\\.[^}]+\\}\""

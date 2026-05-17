@@ -83,13 +83,14 @@ public class LoginSalerController extends HttpServlet {
 
         try {
             String name = request.getParameter("name");
+            String password = request.getParameter("password");
             UserDAO dao = new UserDAO();
-            SalesPersonDTO user = dao.loginSalesPerson(name);
+            SalesPersonDTO user = dao.loginSalesPerson(name, password);
             if (user != null) {
                 session.setAttribute("USER", user);
                 url = SUCCESS;
             } else {
-                request.setAttribute("ERROR_MESSAGE", name);
+                request.setAttribute("ERROR_MESSAGE", "Tên hoặc mật khẩu không hợp lệ!");
             }
         } catch (Exception e) {
             request.setAttribute("ERROR_MESSAGE", "Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại sau!");

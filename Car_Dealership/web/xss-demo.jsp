@@ -15,7 +15,7 @@
         <button type="submit">Submit</button>
     </form>
 
-    <p>Unescaped EL output: <c:out value="${param.q}" /></p>
-    <p>Unescaped scriptlet output: <%= request.getParameter("q") %></p>
+    <% request.setAttribute("q", request.getParameter("q")); %>
+    <p>Safe output: <c:out value="${q}" /></p>
 </body>
 </html>

@@ -8,9 +8,26 @@ import dtos.CustomerDTO;
 import dtos.MechanicDTO;
 import dtos.SalesPersonDTO;
 import java.sql.SQLException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.naming.NamingException;
 
 public class UserDAO {
+
+    private boolean matchesHash(String rawPassword, String expectedHash) throws NoSuchAlgorithmException {
+        if (rawPassword == null || expectedHash == null || expectedHash.isBlank()) {
+            return false;
+        }
+
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hashBytes = digest.digest(rawPassword.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hex = new StringBuilder(hashBytes.length * 2);
+        for (byte hashByte : hashBytes) {
+            hex.append(String.format("%02x", hashByte & 0xff));
+        }
+        return expectedHash.equalsIgnoreCase(hex.toString());
+    }
 
     public CustomerDTO loginCustomer(String custName, String phone) throws Exception {
         CustomerDTO customer = null;
@@ -41,21 +58,26 @@ public class UserDAO {
         return customer;
     }
 
-    public MechanicDTO loginMechanic(String mechanicName) throws Exception {
+    public MechanicDTO loginMechanic(String mechanicName, String password) throws Exception {
         MechanicDTO mechanic = null;
         Connection conn = null;
         try {
             conn = DBUtil.getConnection();
             if (conn != null) {
-                String sql = "SELECT mechanicID FROM Mechanic WHERE mechanicName=?";
+                String sql = "SELECT mechanicID FROM Mechanic WHERE LOWER(mechanicName)=LOWER(?)";
                 PreparedStatement st = conn.prepareStatement(sql);
                 st.setString(1, mechanicName);
                 ResultSet rs = st.executeQuery();
                 if (rs.next()) {
-                    mechanic = new MechanicDTO(rs.getString("mechanicID"), mechanicName);
+                    String expectedHash = System.getenv("MECHANIC_LOGIN_HASH");
+                    if (matchesHash(password, expectedHash)) {
+                        mechanic = new MechanicDTO(rs.getString("mechanicID"), mechanicName);
+                    }
                 }
             }
         } catch (ClassNotFoundException | SQLException | NamingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -68,7 +90,7 @@ public class UserDAO {
         }
         return mechanic;
     }
-    public SalesPersonDTO loginSalesPerson(String name) {
+    public SalesPersonDTO loginSalesPerson(String name, String password) {
 
         Connection cnn = null;
 
@@ -82,7 +104,7 @@ public class UserDAO {
                     + "      ,[sex]\n"
                     + "      ,[salesAddress]\n"
                     + "  FROM [dbo].[SalesPerson]\n"
-                    + " WHERE [salesName] = ? ";
+                    + " WHERE LOWER([salesName]) = LOWER(?) ";
 
             PreparedStatement st = cnn.prepareStatement(sql);
             st.setString(1, name);
@@ -90,19 +112,22 @@ public class UserDAO {
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
+                String expectedHash = System.getenv("SALESPERSON_LOGIN_HASH");
+                if (matchesHash(password, expectedHash)) {
+                    SalesPersonDTO s = new SalesPersonDTO();
+                    s.setSalesID(rs.getString("salesID"));
+                    s.setSalesName(rs.getString("salesName"));
+                    s.setBirthday(rs.getString("birthday"));
+                    s.setSex(rs.getString("sex"));
+                    s.setSalesAddress(rs.getString("salesAddress"));
 
-                SalesPersonDTO s = new SalesPersonDTO();
-                s.setSalesID(rs.getString("salesID"));
-                s.setSalesName(rs.getString("salesName"));
-                s.setBirthday(rs.getString("birthday"));
-                s.setSex(rs.getString("sex"));
-                s.setSalesAddress(rs.getString("salesAddress"));
-
-                return s;
+                    return s;
+                }
 
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return null;

@@ -58,6 +58,9 @@
                     <div class="mb-3">
                         <input type="text" class="form-control" id="uname" name="name" placeholder="Nhập tên của bạn" required>
                     </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" id="pwd" name="password" placeholder="Nhập mật khẩu" required>
+                    </div>
 
                     <button type="submit" name="login" value="Login" class="btn btn-login w-100">Đăng Nhập</button>
                 </form>
