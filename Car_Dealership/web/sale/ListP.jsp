@@ -54,13 +54,15 @@
     </head>
     <body>
 
+        <% request.setAttribute("search", request.getParameter("search")); %>
+
         <div class="container mt-5">
             <h1 class="text-center mb-4">Parts List</h1>
 
             <!-- Search Form -->
             <form method="get" action="SearchParts" accept-charset="UTF-8" class="mb-4">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="search" value="<c:out value='${param.search}'/>" placeholder="Search parts..." />
+                    <input type="text" class="form-control" name="search" value="<c:out value='${search}'/>" placeholder="Search parts..." />
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>

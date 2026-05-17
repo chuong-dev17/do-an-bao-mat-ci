@@ -23,6 +23,11 @@
         </style>
     </head>
     <body>
+
+        <% request.setAttribute("serialNumber", request.getParameter("serialNumber")); %>
+        <% request.setAttribute("model", request.getParameter("model")); %>
+        <% request.setAttribute("year", request.getParameter("year")); %>
+
         <c:choose>
             <c:when test="${empty sessionScope.USER}">
                 <c:redirect url="loginSale.jsp?errorMechanic=You Must Login First !!!"/>
@@ -35,15 +40,15 @@
                     <form action="${pageContext.request.contextPath}/CarsController" accept-charset="UTF-8" method="GET" class="my-3">
                         <div class="form-group">
                             <label for="serialNumber">Serial Number</label>
-                            <input type="text" class="form-control" id="serialNumber" name="serialNumber" value="<c:out value='${param.serialNumber}'/>">
+                            <input type="text" class="form-control" id="serialNumber" name="serialNumber" value="<c:out value='${serialNumber}'/>">
                         </div>
                         <div class="form-group">
                             <label for="model">Model</label>
-                            <input type="text" class="form-control" id="model" name="model" value="<c:out value='${param.model}'/>">
+                            <input type="text" class="form-control" id="model" name="model" value="<c:out value='${model}'/>">
                         </div>
                         <div class="form-group">
                             <label for="year">Year</label>
-                            <input type="number" class="form-control" id="year" name="year" value="<c:out value='${param.year}'/>">
+                            <input type="number" class="form-control" id="year" name="year" value="<c:out value='${year}'/>">
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Search</button>
                     </form>

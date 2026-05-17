@@ -88,6 +88,9 @@
         </style>
     </head>
     <body>
+
+        <% request.setAttribute("custName", request.getParameter("custName")); %>
+
         <c:choose>
             <c:when test="${empty sessionScope.USER}">
                 <c:redirect url="sale/loginSale.jsp?errorMechanic=You Must Login First !!!"/>
@@ -97,7 +100,7 @@
                     <h2>Customer Page</h2>
                     <h3><a href="sale/AddCustomer.jsp">Add Customer</a></h3>
                     <form action="${pageContext.request.contextPath}/CustomerServlet" class="search-box">
-                        <input type="text" name="custName" placeholder="TÃªn khÃ¡ch hÃ ng" value="<c:out value='${param.custName}'/>">
+                        <input type="text" name="custName" placeholder="TÃªn khÃ¡ch hÃ ng" value="<c:out value='${custName}'/>">
                         <input type="submit" value="TÃ¬m kiáº¿m">
                     </form>
                     <table>

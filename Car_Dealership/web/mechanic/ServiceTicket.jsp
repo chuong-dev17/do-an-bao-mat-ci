@@ -37,20 +37,24 @@
 </head>
 <body>
 
+    <% request.setAttribute("custID", request.getParameter("custID")); %>
+    <% request.setAttribute("carID", request.getParameter("carID")); %>
+    <% request.setAttribute("dateReceived", request.getParameter("dateReceived")); %>
+
     <div class="form-container">
         <h2>Search Service Tickets</h2>
         <form action="searchSTController" method="post">
             <div class="mb-3">
                 <label for="custID" class="form-label">Customer ID</label>
-                <input type="text" class="form-control" id="custID" name="custID" value="<c:out value='${param.custID}'/>" placeholder="Enter Customer ID">
+                <input type="text" class="form-control" id="custID" name="custID" value="<c:out value='${custID}'/>" placeholder="Enter Customer ID">
             </div>
             <div class="mb-3">
                 <label for="carID" class="form-label">Car ID</label>
-                <input type="text" class="form-control" id="carID" name="carID" value="<c:out value='${param.carID}'/>" placeholder="Enter Car ID">
+                <input type="text" class="form-control" id="carID" name="carID" value="<c:out value='${carID}'/>" placeholder="Enter Car ID">
             </div>
             <div class="mb-3">
                 <label for="dateReceived" class="form-label">Date Received</label>
-                <input type="date" class="form-control" id="dateReceived" name="dateReceived" value="<c:out value='${param.dateReceived}'/>" placeholder="Enter Date Received">
+                <input type="date" class="form-control" id="dateReceived" name="dateReceived" value="<c:out value='${dateReceived}'/>" placeholder="Enter Date Received">
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
