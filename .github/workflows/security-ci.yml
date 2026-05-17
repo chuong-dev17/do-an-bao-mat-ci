@@ -6,6 +6,8 @@ on:
     branches: [main, master, develop]
   pull_request:
     branches: [main, master, develop]
+  schedule:
+    - cron: '30 16 * * 2'
 
 permissions:
   contents: read
