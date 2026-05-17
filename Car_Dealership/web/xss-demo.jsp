@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,7 @@
         <button type="submit">Submit</button>
     </form>
 
-    <p>Unescaped EL output: ${param.q}</p>
+    <p>Unescaped EL output: <c:out value="${param.q}" /></p>
     <p>Unescaped scriptlet output: <%= request.getParameter("q") %></p>
 </body>
 </html>

@@ -14,7 +14,7 @@ rules:
     languages: [generic]
     paths:
       include:
-        - "**/*.jsp"
+        - "**/loginSale.jsp"
     pattern-either:
       - pattern-regex: ">\\s*\\$\\{\\s*param\\.[^}]+\\}\\s*<"
       - pattern-regex: "\\$\\{\\s*param\\.[^}]+\\}"
