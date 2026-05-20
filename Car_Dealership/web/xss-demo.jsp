@@ -9,6 +9,11 @@
 <body>
     <h2>Semgrep XSS Demo Page</h2>
 
-    <p>This page intentionally avoids reflecting request parameters in HTML.</p>
+    <%
+        String username = request.getParameter("username");
+    %>
+
+    <p>Welcome, <%= username %></p>
+
 </body>
 </html>

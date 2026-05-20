@@ -1,0 +1,8 @@
+rules:
+  - id: test-param-simple
+    message: "Test simple param.name"
+    severity: INFO
+    languages: [generic]
+    paths:
+      include: ["**/*.jsp"]
+    pattern-regex: 'param\.name'

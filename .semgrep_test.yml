@@ -1,0 +1,9 @@
+rules:
+  - id: test-param-name
+    message: "Test: finds ${param.name}"
+    severity: INFO
+    languages: [generic]
+    paths:
+      include:
+        - "**/*.jsp"
+    pattern-regex: '\$\{\s*param\.name\s*\}'
