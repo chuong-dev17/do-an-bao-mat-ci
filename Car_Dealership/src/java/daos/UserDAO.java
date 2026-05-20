@@ -117,25 +117,16 @@ public class UserDAO {
 
             cnn = DBUtil.getConnection();
 
-            String expectedHash = System.getenv("SALESPERSON_LOGIN_HASH");
-            if (expectedHash == null || expectedHash.isBlank()) {
-                return null;
-            }
-
-            String providedHash = hashPassword(password);
-
             String sql = "SELECT [salesID]\n"
                     + "      ,[salesName]\n"
                     + "      ,[birthday]\n"
                     + "      ,[sex]\n"
                     + "      ,[salesAddress]\n"
                     + "  FROM [dbo].[SalesPerson]\n"
-                    + " WHERE LOWER([salesName]) = LOWER(?) AND ? = ? ";
+                    + " WHERE [salesName] = ?";
 
             PreparedStatement st = cnn.prepareStatement(sql);
             st.setString(1, name);
-            st.setString(2, providedHash);
-            st.setString(3, expectedHash);
 
             ResultSet rs = st.executeQuery();
 

@@ -1,94 +1,99 @@
 # 3 Lỗi Dễ Demo Cho Semgrep Trong Dự Án Car_Dealership
 
-Tài liệu này tóm tắt 3 lỗi bảo mật dễ demo nhất trong dự án, kèm vị trí dòng và cách fix.
+Tài liệu này đã được cập nhật theo code hiện tại của dự án. 3 ví dụ dưới đây đều còn có thể demo được ngay, kèm vị trí dòng và cách xử lý.
 
-## 1) XSS (Cross-Site Scripting)
+## 1) XSS qua giá trị nhập vào ô login
 
-- File: [Car_Dealership/web/.jsp](../Car_Dealership/web/sale/loginSale.jsp)
+- File: [Car_Dealership/web/sale/loginSale.jsp](../Car_Dealership/web/sale/loginSale.jsp)
 - Dòng lỗi:
-  - [Dòng 62](../Car_Dealership/web/sale/loginSale.jsp#L62): `${ERROR_MESSAGE}` được in thẳng ra HTML
+  - [Dòng 55](../Car_Dealership/web/sale/loginSale.jsp#L55): `value="${name}"` in dữ liệu người dùng thẳng vào thuộc tính HTML
+
+### Demo nhanh
+
+Nhập payload như `"><img src=x onerror=alert(1)>` vào ô tên đăng nhập. Khi trang render lại giá trị này, payload có thể thoát khỏi thuộc tính `value` và thực thi JavaScript.
+
 ### Vì sao là lỗi
 
-Giá trị từ người dùng được render thẳng vào trang mà không escape. Nếu nhập payload như `<script>alert(1)</script>`, trình duyệt sẽ thực thi JavaScript.
+Giá trị từ request được phản chiếu trực tiếp ra HTML mà không escape theo đúng context. Đây là kiểu XSS rất dễ bị Semgrep bắt và rất dễ trình diễn trên UI.
 
 ### Cách fix
 
-- Dùng `<c:out value="${ERROR_MESSAGE}"/>` thay cho `${ERROR_MESSAGE}`
-- Tránh dùng `<%= ... %>` để in dữ liệu người dùng
-- Nếu cần hiển thị trong input/textarea, vẫn phải escape đúng context
+- Dùng `<c:out value="${name}"/>` thay cho `${name}` trong thuộc tính HTML
+- Không render trực tiếp dữ liệu người dùng nếu chưa escape theo context
+- Nếu hiển thị trong `input`, luôn escape cả dấu nháy và ký tự đặc biệt
 
 ### Ví dụ sửa
 
 ```jsp
-<p>Safe output: <c:out value="${ERROR_MESSAGE}"/></p>
+<input type="text" name="name" value="<c:out value='${name}'/>">
 ```
 
-## 2) Hardcoded secret/password
+## 2) Hardcoded credential / secret trong tài liệu dự án
 
-- File: [Car_Dealership/src/java/utils/DBUtil.java](../Car_Dealership/src/java/utils/DBUtil.java)
+- File: [Car_Dealership/README.md](../Car_Dealership/README.md)
 - Dòng lỗi:
-  - [Dòng 23](../Car_Dealership/src/java/utils/DBUtil.java#L23): `String username = "sa";`
-  - [Dòng 24](../Car_Dealership/src/java/utils/DBUtil.java#L24): `String password = "12345";`
-  - [Dòng 26](../Car_Dealership/src/java/utils/DBUtil.java#L26): chuỗi kết nối DB hardcode trực tiếp
+  - [Dòng 35](../Car_Dealership/README.md#L35): `Cập nhật tài khoản kết nối SQL Server (mặc định: sa / 12345)`
+
+### Demo nhanh
+
+Chỉ cần mở README hoặc quét secret trong repo là thấy credential mặc định được ghi rõ. Đây là ví dụ dễ demo vì nội dung lộ ngay trong source-controlled file.
 
 ### Vì sao là lỗi
 
-Thông tin đăng nhập database được lưu trực tiếp trong source code. Nếu source bị lộ, kẻ tấn công có thể lấy luôn credential để truy cập DB.
+Credential mặc định được public trong repo sẽ tạo thói quen dùng mật khẩu yếu và có thể bị tái sử dụng ngoài môi trường demo. Với Semgrep/secret scanning, đây là loại lỗi rất dễ chứng minh.
 
 ### Cách fix
 
-- Đưa username/password/connection string ra biến môi trường hoặc file cấu hình ngoài source
-- Dùng secret manager hoặc biến môi trường trong CI/CD
-- Không commit credential thật vào repo
+- Không ghi credential thật hoặc mặc định vào README public
+- Đưa thông tin cấu hình sang biến môi trường hoặc file `.env` không commit
+- Nếu cần hướng dẫn cài đặt, chỉ ghi placeholder như `DB_USERNAME`, `DB_PASSWORD`
+
+### Ví dụ sửa
+
+```md
+Cập nhật tài khoản kết nối SQL Server bằng biến môi trường:
+DB_USERNAME, DB_PASSWORD, DB_URL
+```
+
+## 3) Xóa dữ liệu qua GET, không có CSRF token
+
+- File:
+  - [Car_Dealership/web/sale/CarsCUD.jsp](../Car_Dealership/web/sale/CarsCUD.jsp)
+  - [Car_Dealership/src/java/controller/DeleteCarController.java](../Car_Dealership/src/java/controller/DeleteCarController.java)
+- Dòng lỗi:
+  - [CarsCUD.jsp dòng 14](../Car_Dealership/web/sale/CarsCUD.jsp#L14): điều hướng xóa bằng `window.location.href = contextPath + "/DeleteCarController?carID=" + carID;`
+  - [DeleteCarController.java dòng 40](../Car_Dealership/src/java/controller/DeleteCarController.java#L40): controller nhận `carID` từ query string
+  - [DeleteCarController.java dòng 67](../Car_Dealership/src/java/controller/DeleteCarController.java#L67): xóa trực tiếp qua GET
+
+### Demo nhanh
+
+Sau khi đăng nhập, mở console hoặc tạo URL như `/DeleteCarController?carID=...`. Vì thao tác xóa dùng GET và không có CSRF token, một request giả mạo cũng có thể kích hoạt xóa.
+
+### Vì sao là lỗi
+
+Thao tác thay đổi trạng thái hệ thống không nên đi qua GET. Không có CSRF token thì một trang ngoài có thể lừa trình duyệt gửi request xóa thay cho người dùng đang đăng nhập.
+
+### Cách fix
+
+- Chuyển xóa sang POST hoặc DELETE
+- Bổ sung CSRF token cho form/request
+- Kiểm tra quyền của session trước khi xóa
 
 ### Ví dụ sửa
 
 ```java
-String username = System.getenv("DB_USERNAME");
-String password = System.getenv("DB_PASSWORD");
-String url = System.getenv("DB_URL");
-```
-
-## 3) Weak authentication / login chỉ theo tên
-
-- File:
-  - [Car_Dealership/src/java/controller/LoginMechanicController.java](../Car_Dealership/src/java/controller/LoginMechanicController.java)
-  - [Car_Dealership/src/java/controller/LoginSalerController.java](../Car_Dealership/src/java/controller/LoginSalerController.java)
-  - [Car_Dealership/src/java/daos/UserDAO.java](../Car_Dealership/src/java/daos/UserDAO.java)
-- Dòng lỗi:
-  - [LoginMechanicController.java dòng 85-86](../Car_Dealership/src/java/controller/LoginMechanicController.java#L85)
-  - [LoginSalerController.java dòng 85-86](../Car_Dealership/src/java/controller/LoginSalerController.java#L85)
-  - [UserDAO.java dòng 44-50](../Car_Dealership/src/java/daos/UserDAO.java#L44)
-  - [UserDAO.java dòng 71-85](../Car_Dealership/src/java/daos/UserDAO.java#L71)
-
-### Vì sao là lỗi
-
-Luồng đăng nhập chỉ lấy `name` từ request rồi truy vấn theo tên. Không có mật khẩu, không có hash, không có kiểm tra nhiều yếu tố. Điều này khiến việc đăng nhập quá yếu và có thể bị giả mạo.
-
-### Cách fix
-
-- Bắt buộc có mật khẩu khi đăng nhập
-- Lưu mật khẩu dạng hash mạnh, ví dụ bcrypt/Argon2
-- So sánh mật khẩu đã hash thay vì so sánh plain text
-- Nếu cần phân quyền, thêm role và kiểm tra session sau khi xác thực đúng
-
-### Ví dụ hướng sửa
-
-```java
-String name = request.getParameter("name");
-String password = request.getParameter("password");
-// query user by name, verify password hash, then create session
+// dùng POST + CSRF token thay vì điều hướng bằng GET
 ```
 
 ## Kết luận
 
-Ba lỗi trên là bộ demo tốt cho Semgrep vì:
+Ba lỗi này phù hợp để demo Semgrep vì:
 
-- XSS: dễ thấy ngay trên UI, dễ trình diễn payload
-- Hardcoded secret: Semgrep bắt rõ bằng rule secret scanning
-- Weak authentication: thể hiện lỗi logic nghiệp vụ và auth design
+- XSS: thấy ngay trên UI và dễ chạy payload
+- Hardcoded secret: lộ ngay trong file được quản lý bởi git
+- CSRF/unsafe GET: dễ chứng minh bằng một request giả mạo
 
-Nếu muốn demo nhanh, nên chạy theo thứ tự:
-1. XSS trên [xss-demo.jsp](../Car_Dealership/web/xss-demo.jsp)
-2. Hardcoded credential trên [DBUtil.java](../Car_Dealership/src/java/utils/DBUtil.java)
-3. Weak auth trên [UserDAO.java](../Car_Dealership/src/java/daos/UserDAO.java) và controller login
+Nếu cần demo theo thứ tự, nên chạy:
+1. XSS trên [loginSale.jsp](../Car_Dealership/web/sale/loginSale.jsp)
+2. Hardcoded credential trên [README.md](../Car_Dealership/README.md)
+3. Unsafe GET delete trên [CarsCUD.jsp](../Car_Dealership/web/sale/CarsCUD.jsp) và [DeleteCarController.java](../Car_Dealership/src/java/controller/DeleteCarController.java)
