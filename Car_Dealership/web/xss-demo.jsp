@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +15,7 @@
         String username = request.getParameter("username");
     %>
 
-    <p>Welcome, <%= username %></p>
+    <p>Welcome, <c:out value="${param.username}" /></p>
 
 </body>
 </html>
