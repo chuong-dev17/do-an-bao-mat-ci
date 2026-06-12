@@ -1,5 +1,7 @@
-# OS/editor files
-.DS_Store
+# Environment files (contain secrets)
+.env
+.env.local
+.env.*.local
 Thumbs.db
 .vscode/
 .idea/

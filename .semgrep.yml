@@ -17,10 +17,9 @@ rules:
         - "**/loginSale.jsp"
     pattern-either:
       - pattern-regex: ">\\s*\\$\\{\\s*param\\.[^}]+\\}\\s*<"
-      - pattern-regex: "\\$\\{\\s*param\\.[^}]+\\}"
+      - pattern-regex: "\\$\\{\\s*param\\.[^}]+\\}(?!\\s*</c:out)(?![^<]*\\/>)(?![^<]*c:out)"
       - pattern-regex: "<(input|option|textarea)[^>]*\\bvalue\\s*=\\s*\"\\$\\{\\s*param\\.[^}]+\\}\""
       - pattern-regex: ">\\s*\\$\\{ERROR_MESSAGE\\}\\s*<"
-      - pattern-regex: "\\$\\{ERROR_MESSAGE\\}(?!\\s*</c:out)"
 
   - id: jsp-unescaped-user-el-output
     message: "Potential XSS: unescaped USER/session/request output rendered into HTML"
