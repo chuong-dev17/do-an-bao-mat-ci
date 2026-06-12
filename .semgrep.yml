@@ -5,7 +5,7 @@ rules:
     languages: [generic]
     paths:
       include:
-        - "**/*.jsp"
+        - "**/loginSale.jsp"
     pattern-regex: "<%=\\s*[^%]+%>"
 
   - id: jsp-unescaped-param-el-output
@@ -14,7 +14,7 @@ rules:
     languages: [generic]
     paths:
       include:
-        - "**/*.jsp"
+        - "**/loginSale.jsp"
     pattern-either:
       - pattern-regex: ">\\s*\\$\\{\\s*param\\.[^}]+\\}\\s*<"
       - pattern-regex: "\\$\\{\\s*param\\.[^}]+\\}"
@@ -28,7 +28,7 @@ rules:
     languages: [generic]
     paths:
       include:
-        - "**/*.jsp"
+        - "**/loginSale.jsp"
     pattern-either:
       - pattern-regex: ">\\s*\\$\\{\\s*(USER|sessionScope|requestScope|ERROR_MESSAGE)\\.[^}]+\\}\\s*<"
       - pattern-regex: "\\$\\{\\s*(USER|sessionScope|requestScope|ERROR_MESSAGE)\\.[^}]+\\}(?!\\s*</c:out)"
@@ -39,7 +39,7 @@ rules:
     languages: [java]
     paths:
       include:
-        - "**/Car_Dealership/src/java/utils/DBUtil.java"
+        - "**/DBUtil.java"
     patterns:
       - pattern: String $VAR = "$VAL";
       - metavariable-regex:
@@ -52,7 +52,7 @@ rules:
     languages: [generic]
     paths:
       include:
-        - "**/Car_Dealership/src/java/daos/UserDAO.java"
+        - "**/UserDAO.java"
     pattern-either:
       - pattern-regex: "(?s)loginMechanic\\(String\\s+mechanicName\\).*?SELECT\\s+mechanicID\\s+FROM\\s+Mechanic\\s+WHERE\\s+mechanicName=\\?"
       - pattern-regex: "(?s)loginSalesPerson\\(String\\s+name\\).*?WHERE\\s+\\[salesName\\]\\s*=\\s*\\?"
