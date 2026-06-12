@@ -19,6 +19,8 @@ rules:
       - pattern-regex: ">\\s*\\$\\{\\s*param\\.[^}]+\\}\\s*<"
       - pattern-regex: "\\$\\{\\s*param\\.[^}]+\\}"
       - pattern-regex: "<(input|option|textarea)[^>]*\\bvalue\\s*=\\s*\"\\$\\{\\s*param\\.[^}]+\\}\""
+      - pattern-regex: ">\\s*\\$\\{ERROR_MESSAGE\\}\\s*<"
+      - pattern-regex: "\\$\\{ERROR_MESSAGE\\}(?!\\s*</c:out)"
 
   - id: jsp-unescaped-user-el-output
     message: "Potential XSS: unescaped USER/session/request output rendered into HTML"
@@ -28,8 +30,8 @@ rules:
       include:
         - "**/*.jsp"
     pattern-either:
-      - pattern-regex: ">\\s*\\$\\{\\s*(USER|sessionScope|requestScope)\\.[^}]+\\}\\s*<"
-      - pattern-regex: "<(input|option|textarea)[^>]*\\bvalue\\s*=\\s*\"\\$\\{\\s*(USER|sessionScope|requestScope)\\.[^}]+\\}\""
+      - pattern-regex: ">\\s*\\$\\{\\s*(USER|sessionScope|requestScope|ERROR_MESSAGE)\\.[^}]+\\}\\s*<"
+      - pattern-regex: "\\$\\{\\s*(USER|sessionScope|requestScope|ERROR_MESSAGE)\\.[^}]+\\}(?!\\s*</c:out)"
 
   - id: java-hardcoded-db-credential
     message: "Hardcoded credential in source code"

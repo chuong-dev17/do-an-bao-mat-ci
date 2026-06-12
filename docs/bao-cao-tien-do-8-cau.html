@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bao cao tien do - 8 cau hoi</title>
+  <style>
+    @page { size: A4; margin: 20mm; }
+    body {
+      font-family: "Times New Roman", serif;
+      font-size: 14pt;
+      line-height: 1.5;
+      color: #111;
+      margin: 0;
+      background: #fff;
+    }
+    h1 {
+      text-align: center;
+      font-size: 20pt;
+      margin: 0 0 16px 0;
+      text-transform: uppercase;
+    }
+    .meta {
+      margin-bottom: 18px;
+      font-size: 12.5pt;
+    }
+    .q {
+      margin-top: 12px;
+      font-weight: 700;    }
+    p { margin: 6px 0; text-align: justify; }
+  </style>
+</head>
+<body>
+  <h1>Bao cao tien do de tai (8 cau hoi)</h1>
+  <div class="meta">
+    <div>De tai: Tich hop kiem thu bao mat ma nguon vao quy trinh CI/CD cho Car_Dealership</div>
+    <div>Ngay cap nhat: 21/04/2026</div>
+  </div>
+
+  <div class="q">1. Muc tieu tong quat va 2-3 muc tieu cu the cua de tai</div>
+  <p>Muc tieu tong quat cua de tai la xay dung quy trinh DevSecOps cho du an Car_Dealership, tich hop kiem thu bao mat tinh vao CI/CD de phat hien som lo hong va nang cao chat luong ma nguon.</p>
+  <p>Ba muc tieu cu the gom: (1) tu dong quet SAST khi co push/pull request bang Semgrep; (2) phan tich chat luong ma va issue bao mat bang SonarCloud; (3) dam bao ung dung van van hanh on dinh sau moi lan build thong qua smoke test bang Docker.</p>
+
+  <div class="q">2. Pham vi trien khai muc do nao? Vi sao?</div>
+  <p>Pham vi hien tai o muc thuc nghiem hoan chinh phu hop do an hoc phan, chua mo rong den muc production doanh nghiep. Ly do la de tai tap trung vao gia tri cot loi trong thoi gian ngan: co pipeline bao mat tu dong, co ket qua quet ro rang, va co buoc kiem chung ung dung chay duoc sau build.</p>
+
+  <div class="q">3. De tai nay phuc vu ai, dung trong boi canh nao, va gia tri ung dung la gi?</div>
+  <p>De tai phuc vu lap trinh vien va nguoi phu trach kiem thu/chat luong ma. Boi canh su dung la khi ma nguon thay doi lien tuc, kiem tra thu cong de cham va bo sot loi bao mat.</p>
+  <p>Gia tri ung dung la phat hien loi som theo huong shift-left, giam rui ro truoc khi release, tiet kiem thoi gian review va tao quy trinh co the tai su dung cho cac du an Java Web tuong tu.</p>
+
+  <div class="q">4. Mo hinh thuc nghiem chinh cua de tai la gi?</div>
+  <p>Mo hinh pipeline thuc nghiem: Developer commit ma nguon -&gt; GitHub Actions tu dong chay -&gt; Semgrep quet SAST -&gt; SonarCloud phan tich chat luong/bao mat -&gt; Docker build va smoke test ung dung -&gt; tra ket qua pass/fail cho tung job.</p>
+
+  <div class="q">5. Cac buoc trien khai da thuc hien den thoi diem hien tai la gi?</div>
+  <p>Da thuc hien theo thu tu: (1) khao sat cau truc du an va cac vung nguy co bao mat; (2) thiet lap workflow quet bao mat tu dong; (3) thiet lap workflow phan tich chat luong ma; (4) docker hoa ung dung de dong nhat moi truong; (5) xay dung smoke test xac nhan ung dung phan hoi duoc; (6) soan tai lieu huong dan chay local va xem ket qua CI.</p>
+
+  <div class="q">6. Ket qua thuc nghiem hien tai da dat toi dau so voi muc tieu ban dau?</div>
+  <p>De tai da dat phan lon muc tieu ky thuat cot loi: co pipeline tu dong, co quet bao mat, co phan tich chat luong ma va co kiem chung van hanh ung dung. Phan can hoan thien tiep la tong hop so lieu dinh luong cuoi ky nhu so canh bao theo muc do, thoi gian chay tung job, va so sanh truoc/sau khi tich hop pipeline.</p>
+
+  <div class="q">7. Kho khan da gap la gi va da xu ly nhu the nao?</div>
+  <p>Kho khan chinh gom: phu thuoc token/cau hinh dich vu ngoai, setup moi truong Java Web thu cong, va kho theo doi nhieu buoc CI cung luc. Huong xu ly: bo sung buoc kiem tra cau hinh truoc khi scan de tranh fail gia, dung Docker de dong nhat moi truong, va tach workflow theo tung chuc nang de de debug.</p>
+
+  <div class="q">8. Phan nao da hoan thanh, phan nao dang lam, phan nao la ke hoach tiep theo?</div>
+  <p>Da hoan thanh: tich hop Semgrep, tich hop SonarCloud, docker hoa ung dung, xay dung smoke test co ban, va tai lieu huong dan.</p>
+  <p>Dang lam: toi uu cau hinh scan de giam canh bao nhieu, tong hop so lieu va chuan hoa minh chung bao cao.</p>
+  <p>Ke hoach tiep theo: chot so lieu thuc nghiem, hoan thien slide ket qua cuoi, va dong goi quy trinh de tai su dung cho cac de tai sau.</p>
+</body>
+</html>

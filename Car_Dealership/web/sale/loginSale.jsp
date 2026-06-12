@@ -59,7 +59,7 @@
         </form>
             <br>
             <a href="index.html">back</a>
-               <h6 style="color: red"><c:out value="${ERROR_MESSAGE}"/></h6>
+               <h6 style="color: red">${ERROR_MESSAGE}</h6>
     </div>
 </div>
      
