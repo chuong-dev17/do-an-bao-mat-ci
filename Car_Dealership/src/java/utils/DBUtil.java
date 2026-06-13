@@ -21,7 +21,8 @@ public class DBUtil {
     
     public static Connection getConnection() throws ClassNotFoundException, SQLException, NamingException {
         Connection conn = null;
-    String username = System.getenv("DB_USERNAME");
+   
+StringString username = System.getenv("DB_USERNAME");
 String password = System.getenv("DB_PASSWORD");
 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 String url = System.getenv("DB_URL");
