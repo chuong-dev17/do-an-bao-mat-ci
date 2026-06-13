@@ -45,7 +45,8 @@
 
 <div class="d-flex justify-content-center align-items-center min-vh-100">
     <div class="login-container">
-        <!-- Ảnh đại diện -->        <img src="./img/saler_icon.png" alt="Sales Icon">
+        <!-- Ảnh đại diện -->
+        <img src="./img/saler_icon.png" alt="Sales Icon">
         
         <h3 class="mb-3">Đăng Nhập Nhân Viên Bán Hàng</h3>
 
