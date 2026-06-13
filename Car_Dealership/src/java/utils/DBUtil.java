@@ -21,12 +21,11 @@ public class DBUtil {
     
     public static Connection getConnection() throws ClassNotFoundException, SQLException, NamingException {
         Connection conn = null;
-        String username = System.getenv("DB_USERNAME");
-String password = System.getenv("DB_PASSWORD");
+  String username = "sa";
+String password = "12345";
 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-String url = System.getenv("DB_URL");
+String url = "jdbc:sqlserver://host.docker.internal:1433;databaseName=Car_Dealership;encrypt=true;trustServerCertificate=true";
 conn = DriverManager.getConnection(url, username, password);
-        return conn;
     }
 
     // Đóng kết nối, statement và result set
